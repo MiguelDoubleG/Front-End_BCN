@@ -2,7 +2,7 @@ package com.example.safetourbcn;
 
 public class Empresa extends Usuario {
     private String descripcion;
-
+    //
     Empresa(){
         super();
     }
