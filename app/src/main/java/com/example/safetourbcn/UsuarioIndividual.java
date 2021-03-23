@@ -3,10 +3,10 @@ package com.example.safetourbcn;
 public class UsuarioIndividual extends Usuario {
     private String LocActual;
 
-    UsuarioIndividual(){
+    public UsuarioIndividual(){
     }
 
-    UsuarioIndividual(String nom, String pass, String id){
+    public UsuarioIndividual(String nom, String pass, String id){
         super(nom, pass, id);
     }
 
