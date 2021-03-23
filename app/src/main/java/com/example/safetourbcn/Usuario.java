@@ -5,10 +5,10 @@ public class Usuario {
     private String password;
     private String id;
 
-    Usuario(){
+    public Usuario(){
     }
 
-    Usuario(String nom, String pass, String identification){
+    public Usuario(String nom, String pass, String identification){
         nombre = nom;
         password = pass;
         id = identification;
