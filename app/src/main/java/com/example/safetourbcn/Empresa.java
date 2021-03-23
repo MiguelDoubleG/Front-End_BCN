@@ -3,10 +3,10 @@ package com.example.safetourbcn;
 public class Empresa extends Usuario {
     private String descripcion;
 
-    Empresa(){
+    public Empresa(){
         super();
     }
-    Empresa(String nom, String pass, String id, String desc){
+    public Empresa(String nom, String pass, String id, String desc){
         super(nom, pass, id);
         descripcion = desc;
     }
