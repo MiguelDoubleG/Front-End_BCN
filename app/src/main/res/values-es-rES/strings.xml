@@ -12,4 +12,5 @@
     <string name="login_failed">Error de inicio de sesion</string>
     <string name="action_sign_up">No tienes una cuenta? Regístrate!</string>
     <string name="action_sign_up_short">Regístrate</string>
+    <string name="logo">Logo</string>
 </resources>
