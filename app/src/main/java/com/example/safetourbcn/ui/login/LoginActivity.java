@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -23,8 +24,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.safetourbcn.R;
+<<<<<<< Updated upstream
 import com.example.safetourbcn.ui.login.LoginViewModel;
 import com.example.safetourbcn.ui.login.LoginViewModelFactory;
+=======
+import com.example.safetourbcn.SignInActivity;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+>>>>>>> Stashed changes
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -121,7 +128,13 @@ public class LoginActivity extends AppCompatActivity {
 
     /** Called when the user taps the Send button */
     public void sendMessage(View view) {
+<<<<<<< Updated upstream
         // Do something in response to button
+=======
+        Intent intent = new Intent(this, SignInActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, "A");
+        startActivity(intent);
+>>>>>>> Stashed changes
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
