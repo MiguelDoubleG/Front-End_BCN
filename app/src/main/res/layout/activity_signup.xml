@@ -7,36 +7,53 @@
     tools:context=".SignInActivity">
 
     <EditText
-        android:id="@+id/password3"
+        android:id="@+id/passwordSignUp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="392dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
         android:hint="@string/prompt_password"
-        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeActionLabel="@string/action_log_in_short"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameSignUp" />
 
     <EditText
-        android:id="@+id/username3"
+        android:id="@+id/passwordSignUpRepeat"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="332dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="24dp"
+        android:hint="@string/prompt_password_repeat"
+        android:imeActionLabel="@string/action_log_in_short"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordSignUp" />
+
+    <EditText
+        android:id="@+id/usernameSignUp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="24dp"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -52,8 +69,9 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/action_sign_up"
-        tools:layout_editor_absoluteX="156dp"
-        tools:layout_editor_absoluteY="469dp" />
+        android:layout_marginTop="56dp"
+        android:text="@string/action_sign_up_short"
+        app:layout_constraintTop_toBottomOf="@+id/passwordSignUpRepeat"
+        tools:layout_editor_absoluteX="143dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

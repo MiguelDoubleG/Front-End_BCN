@@ -24,14 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.safetourbcn.R;
-<<<<<<< Updated upstream
-import com.example.safetourbcn.ui.login.LoginViewModel;
-import com.example.safetourbcn.ui.login.LoginViewModelFactory;
-=======
 import com.example.safetourbcn.SignInActivity;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
->>>>>>> Stashed changes
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,8 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = findViewById(R.id.username);
-        final EditText passwordEditText = findViewById(R.id.password);
+        final EditText usernameEditText = findViewById(R.id.usernameLogIn);
+        final EditText passwordEditText = findViewById(R.id.passwordSignUpRepeat);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
@@ -128,13 +123,11 @@ public class LoginActivity extends AppCompatActivity {
 
     /** Called when the user taps the Send button */
     public void sendMessage(View view) {
-<<<<<<< Updated upstream
         // Do something in response to button
-=======
         Intent intent = new Intent(this, SignInActivity.class);
         intent.putExtra(EXTRA_MESSAGE, "A");
         startActivity(intent);
->>>>>>> Stashed changes
+
     }
 
     private void updateUiWithUser(LoggedInUserView model) {

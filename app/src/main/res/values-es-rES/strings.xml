@@ -3,11 +3,13 @@
     <string name="app_name">SafeTourBCN</string>
     <string name="prompt_email">Correo</string>
     <string name="prompt_password">Contraseña</string>
-    <string name="action_sign_in">Inicia Sesion o Registrate</string>
-    <string name="action_sign_in_short">Inicia Sesion</string>
+    <string name="prompt_password_repeat">Repite la contraseña</string>
+    <string name="action_log_in">Inicia Sesion</string>
+    <string name="action_log_in_short">Inicia Sesion</string>
     <string name="welcome">Bienvenido!</string>
     <string name="invalid_username">No es un nombre de usuario valido</string>
-    <string name="invalid_password">La contraseña debe ser >5 caracteres</string>
+    <string name="invalid_password">La contraseña debe tener >5 caracteres</string>
     <string name="login_failed">Error de inicio de sesion</string>
-    <string name="action_sign_up">Registrate</string>
+    <string name="action_sign_up">No tienes una cuenta? Regístrate!</string>
+    <string name="action_sign_up_short">Regístrate</string>
 </resources>
