@@ -15,6 +15,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public interface BackEndRequests {
+    //devuelve true si hacen match
+    //context es "this" cuando se accede a la funcion desde una activity
     public boolean getUsers(String user, String password, Context context);
 }
 
