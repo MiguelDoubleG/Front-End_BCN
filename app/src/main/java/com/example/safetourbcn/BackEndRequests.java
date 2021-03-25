@@ -35,12 +35,12 @@ class userReq implements BackEndRequests {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    JSONArray listUsers = response.getJSONArray("usuarios");
+                    JSONArray listUsers = response.getJSONArray("");
 
                     for(int i =  0; i < listUsers.length(); ++i) {
                         JSONObject user = listUsers.getJSONObject(i);
-                        String id = user.getString("id_usuario");
-                        String pwd = user.getString("contrasenya");
+                        String id = user.getString("EMAIL");
+                        String pwd = user.getString("PASSWORD");
 
                         if (id.equals(user) && pwd.equals(password)) match[0] = true;
                     }
