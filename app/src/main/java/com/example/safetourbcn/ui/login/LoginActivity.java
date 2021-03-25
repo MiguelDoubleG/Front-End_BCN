@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /** Called when the user taps the Send button */
-    public void register(View view) {
+    public void registerButton(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
