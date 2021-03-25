@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -23,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.safetourbcn.BackEndRequests;
 import com.example.safetourbcn.R;
 import com.example.safetourbcn.SignInActivity;
 
@@ -43,6 +45,13 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.passwordSignUpRepeat);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
+        BackEndRequests ber = new BackEndRequests();
+        boolean a = false;
+        a = ber.getUsers(usernameEditText.toString(), passwordEditText.toString(), this);
+
+        if(a) Toast.makeText(getApplicationContext(), "true", Toast.LENGTH_LONG).show();
+        else Toast.makeText(getApplicationContext(), "false", Toast.LENGTH_LONG).show();
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
