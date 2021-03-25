@@ -11,8 +11,8 @@ public class UsuarioIndividual extends Usuario {
     }
 
     @Override
-    public String getId() {
-        return super.getId();
+    public String getEmail() {
+        return super.getEmail();
     }
 
     @Override
@@ -23,11 +23,6 @@ public class UsuarioIndividual extends Usuario {
     @Override
     public String getPassword() {
         return super.getPassword();
-    }
-
-    @Override
-    public void setId(String id) {
-        super.setId(id);
     }
 
     @Override

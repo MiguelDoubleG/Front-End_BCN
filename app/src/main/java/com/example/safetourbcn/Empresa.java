@@ -22,8 +22,8 @@ public class Empresa extends Usuario {
     }
 
     @Override
-    public String getId() {
-        return super.getId();
+    public String getEmail() {
+        return super.getEmail();
     }
 
     public String getDescripcion() {
@@ -38,11 +38,6 @@ public class Empresa extends Usuario {
     @Override
     public void setNombre(String nombre) {
         super.setNombre(nombre);
-    }
-
-    @Override
-    public void setId(String id) {
-        super.setId(id);
     }
 
     public void setDescripcion(String descripcion) {
