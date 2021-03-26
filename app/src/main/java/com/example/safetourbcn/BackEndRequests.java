@@ -13,18 +13,23 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class BackEndRequests {
-    OkHttpClient client = new OkHttpClient();
+    OkHttpClient client;
 
     //devuelve true si hacen match
     //context es "this" cuando se accede a la funcion desde una activity
 
     public BackEndRequests() {
+        client = new OkHttpClient();
     }
+
+
 
     public void matchUser(String user, String pwd) {
         final boolean match = false;
@@ -74,6 +79,37 @@ public class BackEndRequests {
         });
     }
 
+
+    public void addUser(String user, String pwd) {
+        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+        JSONObject newUser = new JSONObject();
+        String url = "http://10.4.41.144:3000/users";
+
+        try {
+            newUser.put("EMAIL", user);
+            newUser.put("PASSWORD", pwd);
+        } catch (JSONException e) {
+            Log.d("OKHTTP3", "JSON Excepton");
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(newUser.toString(), JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body).
+                build();
+        System.out.println(" ");
+        System.out.println("user: " + user);
+        System.out.println("pwd: " + pwd);
+        System.out.println(" ");
+
+        try {
+            Response response = client.newCall(request).execute();
+        } catch (IOException e) {
+            System.out.println("ERROR//////////////////////////////////////////7");
+            e.printStackTrace();
+        }
+    }
 }
 
 

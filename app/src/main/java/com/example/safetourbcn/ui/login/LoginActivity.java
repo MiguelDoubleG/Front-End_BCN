@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -38,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
@@ -135,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText usernameEditText = findViewById(R.id.usernameLogIn);
         EditText passwordEditText = findViewById(R.id.passwordLogIn);
         BackEndRequests ber = new BackEndRequests();
-        ber.matchUser(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+        ber.addUser(usernameEditText.getText().toString(), passwordEditText.getText().toString());
 
 
         String welcome = getString(R.string.welcome) + model.getDisplayName();
