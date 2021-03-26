@@ -46,12 +46,6 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
-        BackEndRequests ber = new BackEndRequests();
-        boolean a = false;
-        a = ber.getUsers(usernameEditText.toString(), passwordEditText.toString(), this);
-
-        if(a) Toast.makeText(getApplicationContext(), "true", Toast.LENGTH_LONG).show();
-        else Toast.makeText(getApplicationContext(), "false", Toast.LENGTH_LONG).show();
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -138,8 +132,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
+        EditText usernameEditText = findViewById(R.id.usernameLogIn);
+        EditText passwordEditText = findViewById(R.id.passwordLogIn);
         BackEndRequests ber = new BackEndRequests();
-        ber.getUsers("a", "aaaa", this);
+        ber.matchUser(usernameEditText.getText().toString(), passwordEditText.getText().toString());
 
 
         String welcome = getString(R.string.welcome) + model.getDisplayName();

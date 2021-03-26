@@ -2,6 +2,7 @@ package com.example.safetourbcn;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -25,7 +26,8 @@ public class BackEndRequests {
     public BackEndRequests() {
     }
 
-    public boolean getUsers(String user, String password, Context context) {
+    public void matchUser(String user, String pwd) {
+        final boolean match = false;
         String url = "http://10.4.41.144:3000/users";
 
         Request request = new Request.Builder().url(url).build();
@@ -41,11 +43,35 @@ public class BackEndRequests {
                 if(response.isSuccessful()) {
                     String r = response.body().string();
 
-                    System.out.println(r);
+                    try {
+                        JSONArray usersList = new JSONArray(r);
+
+                        System.out.println("Lista users y pwd:");
+
+                        for(int i = 0; i < usersList.length(); ++i) {
+                            JSONObject us = usersList.getJSONObject(i);
+                            String userLogin = us.getString("EMAIL");
+                            String pwdLogin = us.getString("PASSWORD");
+
+
+                            System.out.println("user: " + userLogin + " " + user);
+                            System.out.println("password: " + pwdLogin + " " + pwd);
+
+
+                            if(user.equals(userLogin) && pwd.equals(pwdLogin)) System.out.println("It's a match!");
+
+                            System.out.println(" ");
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
                 }
             }
         });
-        return false;
     }
 
 }
