@@ -3,20 +3,21 @@ package com.example.safetourbcn;
 import android.app.DownloadManager;
 import android.content.Context;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class BackEndRequests {
-    RequestQueue rq;
-    String url = "";
+    OkHttpClient client = new OkHttpClient();
 
     //devuelve true si hacen match
     //context es "this" cuando se accede a la funcion desde una activity
@@ -25,35 +26,26 @@ public class BackEndRequests {
     }
 
     public boolean getUsers(String user, String password, Context context) {
-        final boolean[] match = {false};
-        rq = Volley.newRequestQueue(context);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        String url = "http://10.4.41.144:3000/users";
+
+        Request request = new Request.Builder().url(url).build();
+
+        client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray listUsers = response.getJSONArray("");
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
 
-                    for(int i =  0; i < listUsers.length(); ++i) {
-                        JSONObject user = listUsers.getJSONObject(i);
-                        String id = user.getString("EMAIL");
-                        String pwd = user.getString("PASSWORD");
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if(response.isSuccessful()) {
+                    String r = response.body().string();
 
-                        if (id.equals(user) && pwd.equals(password)) match[0] = true;
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    System.out.println(r);
                 }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
         });
-
-        rq.add(request);
-        return match[0];
+        return false;
     }
 
 }

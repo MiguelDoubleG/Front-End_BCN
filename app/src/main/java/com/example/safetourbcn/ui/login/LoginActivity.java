@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
                 .get(LoginViewModel.class);
 
         final EditText usernameEditText = findViewById(R.id.usernameLogIn);
-        final EditText passwordEditText = findViewById(R.id.passwordSignUpRepeat);
+        final EditText passwordEditText = findViewById(R.id.passwordLogIn);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
@@ -138,6 +138,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
+        BackEndRequests ber = new BackEndRequests();
+        ber.getUsers("a", "aaaa", this);
+
+
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
