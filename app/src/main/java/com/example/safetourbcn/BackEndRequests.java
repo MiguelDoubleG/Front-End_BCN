@@ -2,6 +2,7 @@ package com.example.safetourbcn;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
@@ -31,7 +32,7 @@ public class BackEndRequests {
 
 
 
-    public void matchUser(String user, String pwd) {
+    public void matchUser(Context pContext, String user, String pwd) {
         final boolean match = false;
         String url = "http://10.4.41.144:3000/users";
 
@@ -63,7 +64,9 @@ public class BackEndRequests {
                             System.out.println("password: " + pwdLogin + " " + pwd);
 
 
-                            if(user.equals(userLogin) && pwd.equals(pwdLogin)) System.out.println("It's a match!");
+                            if(user.equals(userLogin) && pwd.equals(pwdLogin)) {
+                                System.out.println("It's a match!");
+                            }
 
                             System.out.println(" ");
                         }
