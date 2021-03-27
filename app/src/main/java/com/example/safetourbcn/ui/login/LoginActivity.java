@@ -5,7 +5,6 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -27,9 +26,7 @@ import android.widget.Toast;
 
 import com.example.safetourbcn.BackEndRequests;
 import com.example.safetourbcn.R;
-import com.example.safetourbcn.SignInActivity;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
+import com.example.safetourbcn.SignUpActivity;
 
 public class LoginActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.SafeTourBCN.MESSAGE";
@@ -130,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
     /** Called when the user taps the Send button */
     public void registerButton(View view) {
         // Do something in response to button
-        Intent intent = new Intent(this, SignInActivity.class);
+        Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
     }
 
