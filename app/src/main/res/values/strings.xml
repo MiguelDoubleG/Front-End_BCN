@@ -11,6 +11,7 @@
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
+    <string name="passwords_not_equals">Those passwords didn\'t match</string>
     <string name="login_failed">"Login failed"</string>
     <string name="logo">Logo</string>
     <string name="title_activity_maps">Map</string>

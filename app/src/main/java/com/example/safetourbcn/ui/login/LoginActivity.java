@@ -50,11 +50,10 @@ import okhttp3.Response;
 public class LoginActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.SafeTourBCN.MESSAGE";
     private LoginViewModel loginViewModel;
-    OkHttpClient client;
+    BackEndRequests ber = new BackEndRequests();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        client = new OkHttpClient();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -87,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         };
         usernameEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        /*passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -97,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 return false;
             }
-        });
+        });*/
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +106,18 @@ public class LoginActivity extends AppCompatActivity {
 
                 //EditText usernameEditText = findViewById(R.id.usernameLogIn);
                 //EditText passwordEditText = findViewById(R.id.passwordLogIn);
-                matchUser(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                try {
+                    if(matchUser(usernameEditText.getText().toString(), passwordEditText.getText().toString())) {
+                        loginViewModel.loginSucces(usernameEditText.getText().toString());
+                        logIn();
+                    }
+
+                    else {
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -116,23 +126,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /** Called when the user taps the Send button */
-    public void registerButton(View view) {
+    public void signUpButton(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
     }
 
-    private void updateUiWithUser(LoggedInUserView model) {
-        EditText usernameEditText = findViewById(R.id.usernameLogIn);
-        EditText passwordEditText = findViewById(R.id.passwordLogIn);
-
-        addUser(usernameEditText.getText().toString(), passwordEditText.getText().toString());
-
-
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+    public void logIn() {
+        // Do something in response to button
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
     }
+
+
+
+
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
@@ -146,90 +154,30 @@ public class LoginActivity extends AppCompatActivity {
     //////////////Requests///////////////////////
     ////////////////////////////////////////////
 
-    public void matchUser(String user, String pwd) {
-        final boolean match = false;
-        String url = "http://10.4.41.144:3000/users";
+    public boolean matchUser(String user, String pwd) throws JSONException {
+        JSONArray usersList = new JSONArray();
+        usersList = ber.getUsersList();
 
-        Request request = new Request.Builder().url(url).build();
+        for(int i = 0; i < usersList.length(); ++i) {
+            JSONObject us = usersList.getJSONObject(i);
+            String userLogin = us.getString("EMAIL");
+            String pwdLogin = us.getString("PASSWORD");
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                e.printStackTrace();
+            System.out.println("user: " + userLogin + " " + user);
+            System.out.println("password: " + pwdLogin + " " + pwd);
+
+
+            if(user.equals(userLogin) && pwd.equals(pwdLogin)) {
+                System.out.println("It's a match!");
+                return true;
             }
 
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if(response.isSuccessful()) {
-                    String r = response.body().string();
-
-                    try {
-                        JSONArray usersList = new JSONArray(r);
-
-                        System.out.println("Lista users y pwd:");
-
-                        for(int i = 0; i < usersList.length(); ++i) {
-                            JSONObject us = usersList.getJSONObject(i);
-                            String userLogin = us.getString("EMAIL");
-                            String pwdLogin = us.getString("PASSWORD");
-
-
-                            System.out.println("user: " + userLogin + " " + user);
-                            System.out.println("password: " + pwdLogin + " " + pwd);
-
-
-                            if(user.equals(userLogin) && pwd.equals(pwdLogin)) {
-                                System.out.println("It's a match!");
-                                Intent intent = new Intent(LoginActivity.super.getApplicationContext(), MapsActivity.class);
-                                startActivity(intent);
-                            }
-
-                            System.out.println(" ");
-                        }
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-            }
-        });
-    }
-
-
-    public void addUser(String user, String pwd) {
-        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
-        JSONObject newUser = new JSONObject();
-        String url = "http://10.4.41.144:3000/registerIndividualUser";
-
-        try {
-            newUser.put("email", user);
-            newUser.put("username", "test");
-            newUser.put("password", pwd);
-        } catch (JSONException e) {
-            Log.d("OKHTTP3", "JSON Excepton");
-            e.printStackTrace();
+            System.out.println(" ");
         }
 
-        RequestBody body = RequestBody.create(newUser.toString(), JSON);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body).
-                        build();
-        System.out.println(" ");
-        System.out.println("user: " + user);
-        System.out.println("pwd: " + pwd);
-        System.out.println(" ");
-
-        try {
-            Response response = client.newCall(request).execute();
-        } catch (IOException e) {
-            System.out.println("ERROR//////////////////////////////////////////7");
-            e.printStackTrace();
-        }
+        return false;
     }
+
 
 
 

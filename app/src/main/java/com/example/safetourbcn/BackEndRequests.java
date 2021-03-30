@@ -22,18 +22,20 @@ import okhttp3.Response;
 
 public class BackEndRequests {
     OkHttpClient client;
+    JSONArray usersList;
+    String errorMsg;
 
-    //devuelve true si hacen match
-    //context es "this" cuando se accede a la funcion desde una activity
 
     public BackEndRequests() {
         client = new OkHttpClient();
+        errorMsg = "";
+
+        updateUsersList();
     }
 
 
 
-    public void matchUser(Context pContext, String user, String pwd) {
-        final boolean match = false;
+    void updateUsersList() {
         String url = "http://10.4.41.144:3000/users";
 
         Request request = new Request.Builder().url(url).build();
@@ -42,6 +44,7 @@ public class BackEndRequests {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 e.printStackTrace();
+                errorMsg = "Connection Error";
             }
 
             @Override
@@ -50,37 +53,22 @@ public class BackEndRequests {
                     String r = response.body().string();
 
                     try {
-                        JSONArray usersList = new JSONArray(r);
-
-                        System.out.println("Lista users y pwd:");
-
-                        for(int i = 0; i < usersList.length(); ++i) {
-                            JSONObject us = usersList.getJSONObject(i);
-                            String userLogin = us.getString("EMAIL");
-                            String pwdLogin = us.getString("PASSWORD");
-
-
-                            System.out.println("user: " + userLogin + " " + user);
-                            System.out.println("password: " + pwdLogin + " " + pwd);
-
-
-                            if(user.equals(userLogin) && pwd.equals(pwdLogin)) {
-                                System.out.println("It's a match!");
-                            }
-
-                            System.out.println(" ");
-                        }
-
-
+                        usersList = new JSONArray(r);
+                        errorMsg = "";
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        errorMsg = "Connection Error";
                     }
-
 
                 }
             }
+
         });
     }
+
+
+    public JSONArray getUsersList() { return usersList;}
+
 
 
     public void addUser(String user, String pwd) {
@@ -109,6 +97,7 @@ public class BackEndRequests {
 
         try {
             Response response = client.newCall(request).execute();
+            updateUsersList();
         } catch (IOException e) {
             System.out.println("ERROR//////////////////////////////////////////7");
             e.printStackTrace();
