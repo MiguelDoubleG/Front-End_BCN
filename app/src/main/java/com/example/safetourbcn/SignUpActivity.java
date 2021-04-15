@@ -44,7 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
         final EditText password2EditText = findViewById(R.id.passwordSignUpRepeat);
         final Button signUpButton = findViewById(R.id.signupButton);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading2);
-
+        final EditText nameEditText = findViewById(R.id.nameSignUp);
 
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
@@ -110,6 +110,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void signUp() throws JSONException {
         EditText usernameEditText = findViewById(R.id.usernameSignUp);
         EditText passwordEditText = findViewById(R.id.passwordSignUp);
+        EditText nameEditText = findViewById(R.id.nameSignUp);
 
         ber.addUser(usernameEditText.getText().toString(), passwordEditText.getText().toString());
 

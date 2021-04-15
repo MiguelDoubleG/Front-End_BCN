@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">SafeTourBCN</string>
     <string name="prompt_email">Correo</string>
+    <string name="prompt_name">Nombre</string>
     <string name="prompt_password">Contraseña</string>
     <string name="prompt_password_repeat">Repite la contraseña</string>
     <string name="action_log_in">Inicia Sesion</string>
@@ -15,4 +16,8 @@
     <string name="action_sign_up_short">Regístrate</string>
     <string name="logo">Logo</string>
     <string name="title_activity_maps">Mapa</string>
+    <string name="perfil">Perfil</string>
+    <string name="email">Correo:</string>
+    <string name="volver">Volver</string>
+    <string name="name">Nombre</string>
 </resources>
