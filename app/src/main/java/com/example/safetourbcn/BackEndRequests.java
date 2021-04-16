@@ -21,21 +21,29 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class BackEndRequests {
-    OkHttpClient client;
-    JSONArray usersList;
-    String errorMsg;
+    private static BackEndRequests ber;
+    private OkHttpClient client;
+    private JSONArray usersList;
+    private String errorMsg;
 
 
-    public BackEndRequests() {
+    private BackEndRequests() {
         client = new OkHttpClient();
         errorMsg = "";
 
         updateUsersList();
     }
 
+    public static BackEndRequests getInstance() {
+        if(ber == null) {
+            ber = new BackEndRequests();
+        }
+
+        return ber;
+    }
 
 
-    void updateUsersList() {
+    public void updateUsersList() {
         String url = "http://10.4.41.144:3000/users";
 
         Request request = new Request.Builder().url(url).build();
@@ -102,6 +110,20 @@ public class BackEndRequests {
             System.out.println("ERROR//////////////////////////////////////////7");
             e.printStackTrace();
         }
+    }
+
+    public JSONObject getUserInfo(String email) throws JSONException {
+        for(int i = 0; i < usersList.length(); ++i) {
+            JSONObject us = usersList.getJSONObject(i);
+
+            String userLogin = us.getString("EMAIL");
+
+            if(email.equals(userLogin)) {
+                return us;
+            }
+        }
+
+        return null;
     }
 }
 

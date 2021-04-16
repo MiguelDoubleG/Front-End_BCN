@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 public class PerfilUsuario extends AppCompatActivity {
 
-    BackEndRequests ber = new BackEndRequests();
+    BackEndRequests ber = BackEndRequests.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
