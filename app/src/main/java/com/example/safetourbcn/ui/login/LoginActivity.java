@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.example.safetourbcn.BackEndRequests;
 import com.example.safetourbcn.MapsActivity;
 import com.example.safetourbcn.R;
+import com.example.safetourbcn.Session;
 import com.example.safetourbcn.SignUpActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -157,6 +158,9 @@ public class LoginActivity extends AppCompatActivity {
     public boolean matchUser(String user, String pwd) throws JSONException {
         JSONArray usersList = new JSONArray();
         usersList = ber.getUsersList();
+        if (ber.getErrorMsg().equals("Connection Error")) {
+            return false;
+        }
 
         for(int i = 0; i < usersList.length(); ++i) {
             JSONObject us = usersList.getJSONObject(i);
@@ -169,6 +173,9 @@ public class LoginActivity extends AppCompatActivity {
 
             if(user.equals(userLogin) && pwd.equals(pwdLogin)) {
                 System.out.println("It's a match!");
+                //Iniciar session
+                Session currentSession = Session.getInstance();
+                currentSession.init(us);
                 return true;
             }
 

@@ -125,6 +125,11 @@ public class BackEndRequests {
 
         return null;
     }
+
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
 }
 
 
