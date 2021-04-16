@@ -20,4 +20,10 @@
     <string name="email">Correo:</string>
     <string name="volver">Volver</string>
     <string name="name">Nombre</string>
+
+
+    <!-- Errores  -->
+    <string name="retry">Reintentar</string>
+    <string name="connection_error">Error de conexión</string>
+    <string name="not_match">Usuario o contraseña incorrecto/s</string>
 </resources>

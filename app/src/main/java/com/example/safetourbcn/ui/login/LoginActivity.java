@@ -2,10 +2,12 @@ package com.example.safetourbcn.ui.login;
 
 import android.app.Activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -52,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.SafeTourBCN.MESSAGE";
     private LoginViewModel loginViewModel;
     BackEndRequests ber = BackEndRequests.getInstance();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,7 +117,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     else {
-
+                        if(ber.getErrorMsg().equals("")) showErrorMatch();
+                        else if (ber.getErrorMsg().equals("Connection Error")) showErrorConnection();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -158,6 +162,8 @@ public class LoginActivity extends AppCompatActivity {
     public boolean matchUser(String user, String pwd) throws JSONException {
         JSONArray usersList = new JSONArray();
         usersList = ber.getUsersList();
+
+        System.out.println(ber.getErrorMsg());
         if (ber.getErrorMsg().equals("Connection Error")) {
             return false;
         }
@@ -186,13 +192,35 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    void showErrorMatch () {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.not_match)
+                .setMessage("😅😅😅😅😅😳")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+    }
 
 
+    void showErrorConnection () {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.connection_error)
+                .setMessage("😅😅😅😅😅😳")
 
-
-
-
-
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO: volver a llamar al server (o no)
+                    }
+                })
+                .show();
+    }
 
 
 }
