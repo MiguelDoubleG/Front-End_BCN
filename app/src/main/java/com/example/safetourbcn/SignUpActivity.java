@@ -112,7 +112,7 @@ public class SignUpActivity extends AppCompatActivity {
         EditText passwordEditText = findViewById(R.id.passwordSignUp);
         EditText nameEditText = findViewById(R.id.nameSignUp);
 
-        ber.addUser(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+        ber.addUser(usernameEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.toString());
 
         SystemClock.sleep(1000);
 

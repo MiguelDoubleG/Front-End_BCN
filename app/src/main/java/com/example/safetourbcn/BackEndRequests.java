@@ -71,14 +71,14 @@ public class BackEndRequests {
 
 
 
-    public void addUser(String user, String pwd) {
+    public void addUser(String user, String pwd, String name) {
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
         JSONObject newUser = new JSONObject();
         String url = "http://10.4.41.144:3000/registerIndividualUser";
 
         try {
             newUser.put("email", user);
-            newUser.put("username", "test");
+            newUser.put("username", name);
             newUser.put("password", pwd);
         } catch (JSONException e) {
             Log.d("OKHTTP3", "JSON Excepton");
