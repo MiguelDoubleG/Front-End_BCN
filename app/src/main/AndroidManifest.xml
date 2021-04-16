@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SafeTourBCN"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PerfilUsuario"></activity>
+        <activity android:name=".PerfilUsuarioActivity"></activity>
         <activity
             android:name=".SignUpActivity"
             android:parentActivityName=".ui.login.LoginActivity">

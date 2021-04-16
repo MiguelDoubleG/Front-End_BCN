@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class PerfilUsuario extends AppCompatActivity {
+public class PerfilUsuarioActivity extends AppCompatActivity {
 
     BackEndRequests ber = BackEndRequests.getInstance();
     @Override
