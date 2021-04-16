@@ -20,4 +20,10 @@
     <string name="email">Email:</string>
     <string name="volver">Back</string>
     <string name="name">Name</string>
+
+
+    <!-- Errores  -->
+    <string name="retry">Try Again</string>
+    <string name="connection_error">Connection Error</string>
+    <string name="not_match">User or password are incorrect</string>
 </resources>

@@ -1,8 +1,10 @@
 package com.example.safetourbcn;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -119,6 +121,11 @@ public class SignUpActivity extends AppCompatActivity {
         if(matchUser(usernameEditText.getText().toString(), passwordEditText.getText().toString())) {
             logIn();
         }
+
+
+        else {
+            showErrorConnection();
+        }
     }
 
 
@@ -155,6 +162,23 @@ public class SignUpActivity extends AppCompatActivity {
         // Do something in response to button
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
+    }
+
+
+
+    void showErrorConnection () {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.connection_error)
+                .setMessage("😅😅😅😅😅😳")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO: volver a llamar al server (o no)
+                    }
+                })
+                .show();
     }
 
 }
