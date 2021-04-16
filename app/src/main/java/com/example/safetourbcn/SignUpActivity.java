@@ -27,7 +27,7 @@ import org.json.JSONObject;
 
 public class SignUpActivity extends AppCompatActivity {
     private LoginViewModel loginViewModel;
-    BackEndRequests ber = new BackEndRequests();
+    BackEndRequests ber = BackEndRequests.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -50,7 +50,7 @@ import okhttp3.Response;
 public class LoginActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.SafeTourBCN.MESSAGE";
     private LoginViewModel loginViewModel;
-    BackEndRequests ber = new BackEndRequests();
+    BackEndRequests ber = BackEndRequests.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
