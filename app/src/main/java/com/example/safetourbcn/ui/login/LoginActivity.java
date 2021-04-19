@@ -33,6 +33,14 @@ import com.example.safetourbcn.MapsActivity;
 import com.example.safetourbcn.R;
 import com.example.safetourbcn.Session;
 import com.example.safetourbcn.SignUpActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -40,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.security.Signature;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -54,6 +63,8 @@ public class LoginActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.SafeTourBCN.MESSAGE";
     private LoginViewModel loginViewModel;
     BackEndRequests ber = BackEndRequests.getInstance();
+    GoogleSignInClient mGoogleSignInClient;
+    int RC_SIGN_IN = 0;
 
 
     @Override
@@ -69,6 +80,34 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.passwordLogIn);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
+
+
+
+        /////GOOGLE SIGN IN/////////////////////////////////
+        final SignInButton signInGoogleButton = findViewById(R.id.log_in_google_button);
+
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                                        .requestEmail()
+                                                        .build();
+        
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        signInGoogleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.log_in_google_button:
+                        logInGoogle();
+                        break;
+                }
+            }
+        });
+
+        ////////////////////////////////////////////////////////
 
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
@@ -118,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     else {
                         if(ber.getErrorMsg().equals("")) showErrorMatch();
-                        else if (ber.getErrorMsg().equals("Connection Error")) showErrorConnection();
+                        else if (ber.getErrorMsg().equals("connection")) showErrorConnection();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -137,22 +176,55 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+
+
+
     public void logIn() {
         // Do something in response to button
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
-
-
-
-
-
+    
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 
 
+    public void logInGoogle() {
+        // Do something in response to button
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
 
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
+            // Signed in successfully, show authenticated UI.
+            logIn();
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w("Error", "signInResult:failed code=" + e.getStatusCode());
+            showErrorConnection();
+        }
+    }
 
 
     //////////////////////////////////////////////
@@ -164,7 +236,7 @@ public class LoginActivity extends AppCompatActivity {
         usersList = ber.getUsersList();
 
         System.out.println(ber.getErrorMsg());
-        if (ber.getErrorMsg().equals("Connection Error")) {
+        if (ber.getErrorMsg().equals("connection")) {
             return false;
         }
 
@@ -221,6 +293,7 @@ public class LoginActivity extends AppCompatActivity {
                 })
                 .show();
     }
+
 
 
 }

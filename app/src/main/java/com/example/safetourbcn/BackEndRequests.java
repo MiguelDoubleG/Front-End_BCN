@@ -29,7 +29,7 @@ public class BackEndRequests {
 
     private BackEndRequests() {
         client = new OkHttpClient();
-        errorMsg = "";
+        errorMsg = "connection";
 
         updateUsersList();
     }
@@ -52,7 +52,7 @@ public class BackEndRequests {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 e.printStackTrace();
-                errorMsg = "Connection Error";
+                errorMsg = "connection";
             }
 
             @Override
@@ -65,7 +65,7 @@ public class BackEndRequests {
                         errorMsg = "";
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        errorMsg = "Connection Error";
+                        errorMsg = "connection";
                     }
 
                 }
