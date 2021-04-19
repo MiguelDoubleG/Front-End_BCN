@@ -20,4 +20,9 @@ public class Session {
     public void init(JSONObject info) throws JSONException {
         currentUser = new UsuarioIndividual(info.getString("NAME"), info.getString("PASSWORD"),info.getString("EMAIL"));
     }
+
+
+    public void initGoogle(String name, String password, String email) {
+        currentUser = new UsuarioIndividual(name, password, email);
+    }
 }

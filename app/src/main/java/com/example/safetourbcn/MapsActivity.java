@@ -2,8 +2,11 @@ package com.example.safetourbcn;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.net.Uri;
 import android.os.Bundle;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -11,9 +14,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONException;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    BackEndRequests ber = BackEndRequests.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +30,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+
+
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if (acct != null) {
+            String personName = acct.getDisplayName();
+            String personGivenName = acct.getGivenName();
+            String personFamilyName = acct.getFamilyName();
+            String personEmail = acct.getEmail();
+            String personId = acct.getId();
+            Uri personPhoto = acct.getPhotoUrl();
+
+            try {
+                if(ber.getUserInfo(personEmail) == null) {
+                    ber.addUser(personEmail, "Google", personName);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Session currentSession = Session.getInstance();
+            currentSession.initGoogle(personName, "Google", personEmail);
+        }
     }
 
     /**
