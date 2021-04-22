@@ -1,5 +1,6 @@
 package com.example.safetourbcn;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import android.net.Uri;
@@ -16,7 +17,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     BackEndRequests ber = BackEndRequests.getInstance();
@@ -24,6 +25,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ber.updatePlacesList();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -76,5 +78,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //mMap.addMarker(new MarkerOptions().position(bcn).title("Marker in Sydney"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(bcn));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bcn, 12));
+
+
+        PlacesList pl = PlacesList.getInstance();
+
+        for(int i = 0; i < pl.getLength(); ++i) {
+            Establishment place = pl.getEstablishment(i);
+            googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(place.getLat(), place.getLng()))
+                    .title(place.getName()));
+        }
     }
 }
