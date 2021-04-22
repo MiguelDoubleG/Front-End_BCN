@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/loginActivity">
+
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.example.safetourbcn.ui.login.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" >
+        <action
+            android:id="@+id/action_loginActivity_to_mapsActivity"
+            app:destination="@id/mapsActivity" />
+    </activity>
+    <activity
+        android:id="@+id/mapsActivity"
+        android:name="com.example.safetourbcn.MapsActivity"
+        android:label="activity_maps"
+        tools:layout="@layout/activity_maps" >
+        <action
+            android:id="@+id/action_mapsActivity_to_perfilUsuarioActivity"
+            app:destination="@id/perfilUsuarioActivity" />
+    </activity>
+    <activity
+        android:id="@+id/perfilUsuarioActivity"
+        android:name="com.example.safetourbcn.PerfilUsuarioActivity"
+        android:label="activity_perfil_usuario"
+        tools:layout="@layout/activity_perfil_usuario" />
+    <activity
+        android:id="@+id/signUpActivity"
+        android:name="com.example.safetourbcn.SignUpActivity"
+        android:label="activity_signup"
+        tools:layout="@layout/activity_signup" >
+        <action
+            android:id="@+id/action_signUpActivity_to_loginActivity"
+            app:destination="@id/loginActivity"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_close_enter" />
+        <action
+            android:id="@+id/action_signUpActivity_to_mapsActivity"
+            app:destination="@id/mapsActivity" />
+    </activity>
+</navigation>
