@@ -24,6 +24,7 @@ public class BackEndRequests {
     private static BackEndRequests ber;
     private OkHttpClient client;
     private JSONArray usersList;
+    private JSONArray placesList;
     private String errorMsg;
 
 
@@ -42,6 +43,12 @@ public class BackEndRequests {
         return ber;
     }
 
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////USERS//////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
 
     public void updateUsersList() {
         String url = "http://10.4.41.144:3000/users";
@@ -125,6 +132,56 @@ public class BackEndRequests {
 
         return null;
     }
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////PLACES/////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+
+    public void updatePlacesList() {
+        String url = "http://10.4.41.144:3000/establishments";
+
+        Request request = new Request.Builder().url(url).build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+                errorMsg = "connection";
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if(response.isSuccessful()) {
+                    String r = response.body().string();
+
+                    try {
+                        placesList = new JSONArray(r);
+                        errorMsg = "";
+
+                        PlacesList pl = PlacesList.getInstance();
+                        pl.updateList(placesList);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        errorMsg = "connection";
+                    }
+
+                }
+            }
+        });
+    }
+
+
+    public JSONArray getPlacesListList() { return placesList;}
+
+
+
+
+
+
+
+
 
 
     public String getErrorMsg() {
