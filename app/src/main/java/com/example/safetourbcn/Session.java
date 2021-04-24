@@ -25,4 +25,7 @@ public class Session {
     public void initGoogle(String name, String password, String email) {
         currentUser = new UsuarioIndividual(name, password, email);
     }
+
+
+    public String getName() { return currentUser.getNombre();}
 }
