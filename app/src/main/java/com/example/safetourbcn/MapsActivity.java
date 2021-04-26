@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -31,6 +32,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -45,6 +48,8 @@ public class MapsActivity
     private BackEndRequests ber = BackEndRequests.getInstance();
     private AppBarConfiguration mAppBarConfiguration;
     private Session session;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private Location currentLocation;
 
 
     /**
@@ -122,6 +127,16 @@ public class MapsActivity
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.welcome);
         navUsername.setText("Welcome " + session.getInstance().getName());
+
+
+
+        View locationButton = findViewById(R.id.fab);
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getCurrentLocation();
+            }
+        });
     }
 
     /**
@@ -161,7 +176,7 @@ public class MapsActivity
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            if(!permissionDenied) enableMyLocation();
+            if (!permissionDenied) enableMyLocation();
             return;
         }
         map.setMyLocationEnabled(true);
@@ -204,7 +219,6 @@ public class MapsActivity
     }
 
 
-
     /////////////PERMISSION MANAGEMENT///////////
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -219,7 +233,7 @@ public class MapsActivity
 
                     finish();
                     startActivity(getIntent());
-                }  else {
+                } else {
                     // Explain to the user that the feature is unavailable because
                     // the features requires a permission that the user has denied.
                     // At the same time, respect the user's decision. Don't link to
@@ -233,7 +247,6 @@ public class MapsActivity
         // Other 'case' lines to check for other
         // permissions this app might request.
     }
-
 
 
     //////////NAV//////////
@@ -252,7 +265,6 @@ public class MapsActivity
     }
 
 
-
     public void logout(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, SignUpActivity.class);
@@ -266,5 +278,36 @@ public class MapsActivity
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+    }
+
+
+    public void getCurrentLocation() {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        Task<Location> tl = fusedLocationProviderClient.getLastLocation();
+        tl.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    currentLocation = location;
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom
+                            (new LatLng(currentLocation.getLatitude(),
+                                    currentLocation.getLongitude()), 15), 1500, null);
+                }
+            }
+        });
+    }
 }
