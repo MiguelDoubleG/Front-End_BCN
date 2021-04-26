@@ -294,6 +294,7 @@ public class LoginActivity extends AppCompatActivity {
                 .show();
     }
 
-
+    @Override
+    public void onBackPressed() {}
 
 }

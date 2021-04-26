@@ -264,4 +264,7 @@ public class MapsActivity
         Intent intent = new Intent(this, PerfilUsuarioActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {}
 }
