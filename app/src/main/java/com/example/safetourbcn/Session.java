@@ -28,4 +28,6 @@ public class Session {
 
 
     public String getName() { return currentUser.getNombre();}
+
+    public String getEmail() { return currentUser.getEmail();}
 }
