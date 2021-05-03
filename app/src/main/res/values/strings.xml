@@ -45,6 +45,23 @@
     <string name="menu_map">Map</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_logout">Logout</string>
+    <string name="filters">Filters</string>
+    <string name="ok">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="price">Price</string>
+    <string name="distance">Distance</string>
+    <string name="rating">Rating</string>
+    <string name="category">Category</string>
+    <string name="discount">Discount</string>
 
     <!--    -->
+
+
+
+
+    <!-- Filter Menu -->
+    <string-array name="filter_menu">
+        <item>Bar</item>
+        <item>Restaurant</item>
+    </string-array>
 </resources>

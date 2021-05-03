@@ -46,4 +46,23 @@
     <string name="menu_profile">Perfil</string>
     <string name="menu_logout">Cerrar sesión</string>
     <!--    -->
+
+
+    <string name="filters">Filtros</string>
+    <string name="ok">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="price">Precio</string>
+    <string name="distance">Distancia</string>
+    <string name="rating">Valoración</string>
+    <string name="category">Categoría</string>
+    <string name="discount">Descuento</string>
+
+
+
+
+    <!-- Filter Menu -->
+    <string-array name="filter_menu">
+        <item>Bar</item>
+        <item>Restaurante</item>
+    </string-array>
 </resources>

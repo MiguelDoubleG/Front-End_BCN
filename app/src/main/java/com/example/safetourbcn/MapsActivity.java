@@ -1,6 +1,7 @@
 package com.example.safetourbcn;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -12,12 +13,16 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +45,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
+
 public class MapsActivity
         extends AppCompatActivity
         implements GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback {
@@ -50,6 +57,7 @@ public class MapsActivity
     private Session session;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location currentLocation;
+    private LocationManager locationManager;
 
 
     /**
@@ -129,7 +137,6 @@ public class MapsActivity
         navUsername.setText("Welcome " + session.getInstance().getName());
 
 
-
         View locationButton = findViewById(R.id.fab);
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +144,11 @@ public class MapsActivity
                 getCurrentLocation();
             }
         });
+
+
+        MenuItem filterButton = findViewById(R.id.action_settings);
     }
+
 
     /**
      * Manipulates the map once available.
@@ -154,15 +165,8 @@ public class MapsActivity
         LatLng bcn = new LatLng(41.385064, 2.173404);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(bcn, 12));
 
-
-        PlacesList pl = PlacesList.getInstance();
-
-        for (int i = 0; i < pl.getLength(); ++i) {
-            Establishment place = pl.getEstablishment(i);
-            googleMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(place.getLat(), place.getLng()))
-                    .title(place.getName()));
-        }
+        //show all
+        showEstablishments(null, null, null, null, null);
 
         map.setOnMyLocationButtonClickListener(this);
         map.setOnMyLocationClickListener(this);
@@ -184,6 +188,47 @@ public class MapsActivity
         map.setOnMyLocationClickListener(this);
 
 
+    }
+
+    void showEstablishments(String category, Integer distance, Integer price, Integer rating, Boolean discount) {
+        PlacesList pl = PlacesList.getInstance();
+        map.clear();
+
+        for (int i = 0; i < pl.getLength(); ++i) {
+            Establishment place = pl.getEstablishment(i);
+            boolean bCategory = category == null || category == place.getCategory();
+            boolean bDistance = distance == null || distance >= calcDistance(place);
+            boolean bPrice = price == null || price >= place.getPrice();
+            boolean bRating = rating == null || discount == place.getRating();
+            boolean bDiscount = discount == null || discount == place.getDiscount();
+
+            if (bCategory && bDiscount && bDistance && bPrice && bRating)
+                map.addMarker(new MarkerOptions()
+                        .position(new LatLng(place.getLat(), place.getLng()))
+                        .title(place.getName()));
+        }
+    }
+
+    private float calcDistance(Establishment place) {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return 0;
+        }
+        Task<Location> current = fusedLocationProviderClient.getLastLocation();
+        Location currentLocation = current.getResult();
+
+        float[] results = new float[3];
+        Location.distanceBetween(place.getLat(), place.getLng(), currentLocation.getLatitude(), currentLocation.getLongitude(), results);
+
+        return results[0];
     }
 
     /**
@@ -258,6 +303,18 @@ public class MapsActivity
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            showFilterMenu();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
@@ -310,4 +367,25 @@ public class MapsActivity
             }
         });
     }
+
+
+    void showFilterMenu () {
+        LayoutInflater inflater = this.getLayoutInflater();
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.filters)
+                .setView(inflater.inflate(R.layout.filter_menu, null))
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+    }
+
+    
 }

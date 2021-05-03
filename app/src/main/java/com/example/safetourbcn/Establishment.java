@@ -64,4 +64,20 @@ public class Establishment {
     public void setLng(double lng) { this.lng = lng; }
 
     public void setIdCompany(String idCompany) { this.idCompany = idCompany; }
+
+    public String getCategory() {
+        return null;
+    }
+
+    public Integer getPrice() {
+        return null;
+    }
+
+    public Boolean getRating() {
+        return null;
+    }
+
+    public Boolean getDiscount() {
+        return null;
+    }
 }

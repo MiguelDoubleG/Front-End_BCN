@@ -193,6 +193,11 @@ public class LoginActivity extends AppCompatActivity {
 
     public void logInGoogle() {
         // Do something in response to button
+        if(ber.getErrorMsg().equals("connection")) {
+            showErrorConnection();
+            return;
+        }
+
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
