@@ -48,6 +48,7 @@
     <!--    -->
 
 
+    <!-- Filter Menu -->
     <string name="filters">Filtros</string>
     <string name="ok">Aceptar</string>
     <string name="cancel">Cancelar</string>
@@ -56,11 +57,8 @@
     <string name="rating">Valoración</string>
     <string name="category">Categoría</string>
     <string name="discount">Descuento</string>
+    <string name="reset">Restablecer</string>
 
-
-
-
-    <!-- Filter Menu -->
     <string-array name="filter_menu">
         <item>Bar</item>
         <item>Restaurante</item>
