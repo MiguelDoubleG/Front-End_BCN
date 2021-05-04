@@ -59,6 +59,7 @@ public class MapsActivity
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location currentLocation;
     private LocationManager locationManager;
+    private AlertDialog dialog;
 
 
     /**
@@ -371,29 +372,33 @@ public class MapsActivity
 
 
     void showFilterMenu () {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.filters)
-                .setView(inflater.inflate(R.layout.filter_menu, null))
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        showEstablishments(null, 3000, null, null, null);
-                    }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .setNeutralButton(R.string.reset, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        View v = inflater.inflate(R.layout.filter_menu, null);
+        builder.setView(v);
+        dialog = builder.create();
+        v.findViewById(R.id.reset_filter_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tvDistance = (TextView) v.findViewById(R.id.textNumberDistance);
+                //tvDistance.setText("20"); Da error
+            }
+        });
 
-                    }
-                })
-                .show();
+        v.findViewById(R.id.cancel_filter_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        v.findViewById(R.id.ok_filter_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //showEstablishment
+            }
+        });
+
+        dialog.show();
     }
-
-    
 }
