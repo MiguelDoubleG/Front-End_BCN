@@ -53,7 +53,7 @@ public class MapsActivity
         implements GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback {
 
     private GoogleMap map;
-    private BackEndRequests ber = BackEndRequests.getInstance();
+    private final BackEndRequests ber = BackEndRequests.getInstance();
     private AppBarConfiguration mAppBarConfiguration;
     private Session session;
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -199,6 +199,9 @@ public class MapsActivity
                 }
             }
         });
+
+
+        map.setInfoWindowAdapter(new MyInfoWindowAdapter());
     }
 
     void showEstablishments(String category, Integer distance, Integer price, Integer rating, Boolean discount) {
@@ -415,4 +418,37 @@ public class MapsActivity
 
         dialog.show();
     }
+
+
+    /////////////
+    //INFOWINDOW
+    //////////////
+
+    class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+
+        private final View myContentsView;
+
+        MyInfoWindowAdapter() {
+            myContentsView = getLayoutInflater().inflate(R.layout.info_window, null);
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+
+            TextView tvTitle = ((TextView)myContentsView.findViewById(R.id.iw_name));
+            tvTitle.setText(marker.getTitle());
+            //TextView tvSnippet = ((TextView)myContentsView.findViewById(R.id.snippet));
+            //tvSnippet.setText(marker.getSnippet());
+
+            return myContentsView;
+        }
+
+        @Override
+        public View getInfoWindow(Marker marker) {
+            // TODO Auto-generated method stub
+            return myContentsView;
+        }
+
+    }
+
 }
