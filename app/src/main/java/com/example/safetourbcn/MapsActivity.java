@@ -189,7 +189,16 @@ public class MapsActivity
         map.setOnMyLocationButtonClickListener(this);
         map.setOnMyLocationClickListener(this);
 
-
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        Task<Location> tl = fusedLocationProviderClient.getLastLocation();
+        tl.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    currentLocation = location;
+                }
+            }
+        });
     }
 
     void showEstablishments(String category, Integer distance, Integer price, Integer rating, Boolean discount) {
@@ -224,8 +233,6 @@ public class MapsActivity
             // for ActivityCompat#requestPermissions for more details.
             return 0;
         }
-        Task<Location> current = fusedLocationProviderClient.getLastLocation();
-        Location currentLocation = current.getResult();
 
         float[] results = new float[3];
         Location.distanceBetween(place.getLat(), place.getLng(), currentLocation.getLatitude(), currentLocation.getLongitude(), results);
@@ -355,7 +362,6 @@ public class MapsActivity
             return;
         }
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         Task<Location> tl = fusedLocationProviderClient.getLastLocation();
         tl.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
@@ -374,28 +380,36 @@ public class MapsActivity
     void showFilterMenu () {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
-        View v = inflater.inflate(R.layout.filter_menu, null);
-        builder.setView(v);
+        View viewFilterMenu = inflater.inflate(R.layout.filter_menu, null);
+        builder.setView(viewFilterMenu);
         dialog = builder.create();
-        v.findViewById(R.id.reset_filter_button).setOnClickListener(new View.OnClickListener() {
+        viewFilterMenu.findViewById(R.id.reset_filter_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView tvDistance = (TextView) v.findViewById(R.id.textNumberDistance);
-                //tvDistance.setText("20"); Da error
+                TextView tvDistance = (TextView) viewFilterMenu.findViewById(R.id.textNumberDistance);
+                tvDistance.setText("20");
             }
         });
 
-        v.findViewById(R.id.cancel_filter_button).setOnClickListener(new View.OnClickListener() {
+        viewFilterMenu.findViewById(R.id.cancel_filter_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
 
-        v.findViewById(R.id.ok_filter_button).setOnClickListener(new View.OnClickListener() {
+        viewFilterMenu.findViewById(R.id.ok_filter_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //showEstablishment
+                Integer distance = null;
+                TextView tvDistance = (TextView) viewFilterMenu.findViewById(R.id.textNumberDistance);
+                String sDistace = tvDistance.getText().toString();
+                if(!sDistace.equals("")) {
+                    distance = Integer.parseInt(sDistace) * 1000;
+                }
+
+                showEstablishments(null, distance, null, null, null);
+                dialog.dismiss();
             }
         });
 
