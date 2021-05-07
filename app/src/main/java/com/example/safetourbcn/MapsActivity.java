@@ -436,7 +436,7 @@ public class MapsActivity
         public View getInfoContents(Marker marker) {
 
             TextView tvTitle = ((TextView)myContentsView.findViewById(R.id.iw_name));
-            tvTitle.setText(marker.getTitle());
+            tvTitle.setText("aaa");
             //TextView tvSnippet = ((TextView)myContentsView.findViewById(R.id.snippet));
             //tvSnippet.setText(marker.getSnippet());
 
