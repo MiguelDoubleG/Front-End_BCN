@@ -434,9 +434,8 @@ public class MapsActivity
 
         @Override
         public View getInfoContents(Marker marker) {
-
-            TextView tvTitle = ((TextView)myContentsView.findViewById(R.id.iw_name));
-            tvTitle.setText("aaa");
+            TextView tvTitle = (TextView)myContentsView.findViewById(R.id.iw_name);
+            tvTitle.setText(marker.getTitle());
             //TextView tvSnippet = ((TextView)myContentsView.findViewById(R.id.snippet));
             //tvSnippet.setText(marker.getSnippet());
 
@@ -446,7 +445,7 @@ public class MapsActivity
         @Override
         public View getInfoWindow(Marker marker) {
             // TODO Auto-generated method stub
-            return myContentsView;
+            return null;
         }
 
     }
