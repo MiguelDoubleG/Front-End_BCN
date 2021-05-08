@@ -3,20 +3,18 @@ package com.example.safetourbcn;
 public class Usuario {
     private String nombre;
     private String password;
-    private String id;
+    private String email;
 
-    Usuario(){
+    public Usuario(){
     }
 
-    Usuario(String nom, String pass, String identification){
+    public Usuario(String nom, String pass, String mail){
         nombre = nom;
         password = pass;
-        id = identification;
+        email = mail;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getEmail(){ return email; }
 
     public String getNombre() {
         return nombre;
@@ -24,10 +22,6 @@ public class Usuario {
 
     public String getPassword() {
         return password;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public void setNombre(String nombre) {
