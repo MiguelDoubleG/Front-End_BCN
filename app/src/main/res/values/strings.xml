@@ -59,7 +59,8 @@
     <string name="discount">Discount</string>
     <string name="reset">Reset</string>
 
-    <string-array name="filter_menu">
+    <string-array name="filter_menu_array">
+        <item>All</item>
         <item>Bar</item>
         <item>Restaurant</item>
     </string-array>

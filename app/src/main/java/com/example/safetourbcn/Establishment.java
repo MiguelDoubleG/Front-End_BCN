@@ -70,14 +70,14 @@ public class Establishment {
     }
 
     public Integer getPrice() {
-        return null;
+        return 2;
     }
 
-    public Boolean getRating() {
-        return null;
+    public Float getRating() {
+        return 2.5f;
     }
 
     public Boolean getDiscount() {
-        return null;
+        return false;
     }
 }

@@ -59,7 +59,8 @@
     <string name="discount">Descuento</string>
     <string name="reset">Restablecer</string>
 
-    <string-array name="filter_menu">
+    <string-array name="filter_menu_array">
+        <item>Todas</item>
         <item>Bar</item>
         <item>Restaurante</item>
     </string-array>

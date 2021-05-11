@@ -24,6 +24,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -204,7 +210,7 @@ public class MapsActivity
         map.setInfoWindowAdapter(new MyInfoWindowAdapter());
     }
 
-    void showEstablishments(String category, Integer distance, Integer price, Integer rating, Boolean discount) {
+    void showEstablishments(String category, Integer distance, Integer price, Float rating, Boolean discount) {
         PlacesList pl = PlacesList.getInstance();
         map.clear();
 
@@ -212,8 +218,8 @@ public class MapsActivity
             Establishment place = pl.getEstablishment(i);
             boolean bCategory = category == null || category == place.getCategory();
             boolean bDistance = distance == null || distance >= calcDistance(place);
-            boolean bPrice = price == null || price >= place.getPrice();
-            boolean bRating = rating == null || discount == place.getRating();
+            boolean bPrice = price == null || price == place.getPrice();
+            boolean bRating = rating == null || rating <= place.getRating();
             boolean bDiscount = discount == null || discount == place.getDiscount();
 
             if (bCategory && bDiscount && bDistance && bPrice && bRating)
@@ -386,6 +392,13 @@ public class MapsActivity
         View viewFilterMenu = inflater.inflate(R.layout.filter_menu, null);
         builder.setView(viewFilterMenu);
         dialog = builder.create();
+
+        Spinner spinner = (Spinner) viewFilterMenu.findViewById(R.id.category_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.filter_menu_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
         viewFilterMenu.findViewById(R.id.reset_filter_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -404,6 +417,15 @@ public class MapsActivity
         viewFilterMenu.findViewById(R.id.ok_filter_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // CATEGORY
+                String category = null;
+                Spinner siCategory = (Spinner) viewFilterMenu.findViewById(R.id.category_spinner);
+                String sCategory = siCategory.getSelectedItem().toString();
+                if(!sCategory.equals("All") && !sCategory.equals("Todas")) {
+                    category = sCategory;
+                }
+
+                // DISTANCE
                 Integer distance = null;
                 TextView tvDistance = (TextView) viewFilterMenu.findViewById(R.id.textNumberDistance);
                 String sDistace = tvDistance.getText().toString();
@@ -411,7 +433,26 @@ public class MapsActivity
                     distance = Integer.parseInt(sDistace) * 1000;
                 }
 
-                showEstablishments(null, distance, null, null, null);
+                //PRICE
+                Integer price = null;
+                RadioGroup rgPrice = (RadioGroup) viewFilterMenu.findViewById(R.id.price_radio_group);
+                int idPrice = rgPrice.getCheckedRadioButtonId();
+                if(idPrice != -1) {
+                    RadioButton checkedPrice = (RadioButton) viewFilterMenu.findViewById(idPrice);
+                    String namePrice = checkedPrice.getText().toString();
+                    price = (int) namePrice.chars().filter(ch -> ch == '$').count();
+                }
+
+                // RATING
+                RatingBar rbRating = (RatingBar) viewFilterMenu.findViewById(R.id.rating_bar);
+                Float rating = rbRating.getRating();
+
+                //DISCOUNT
+                Boolean discount = null;
+                CheckBox cbDiscount = (CheckBox) viewFilterMenu.findViewById(R.id.discount_checkbox);
+                if(cbDiscount.isChecked()) discount = true;
+
+                showEstablishments(category, distance, price, rating, discount);
                 dialog.dismiss();
             }
         });
