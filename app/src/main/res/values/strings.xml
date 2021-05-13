@@ -59,6 +59,11 @@
     <string name="discount">Discount</string>
     <string name="reset">Reset</string>
 
+
+    <!-- InfoWindow -->
+    <string name="reserva_button">Reserve now</string>
+    <string name="valoraciones_button">ratings</string>
+
     <string-array name="filter_menu_array">
         <item>All</item>
         <item>Bar</item>
