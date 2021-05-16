@@ -21,7 +21,7 @@
 
         <Spinner
             android:id="@+id/category_spinner"
-            android:layout_width="356dp"
+            android:layout_width="295dp"
             android:layout_height="50dp"
             android:prompt="@string/category" />
 
@@ -56,6 +56,7 @@
     </LinearLayout>
 
     <RadioGroup
+        android:id="@+id/price_radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -98,10 +99,11 @@
             android:textSize="20sp" />
 
         <RatingBar
-            android:id="@+id/simpleRatingBar"
+            android:id="@+id/rating_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numStars="5" />
+            android:numStars="5"
+            android:stepSize="1.0" />
     </LinearLayout>
 
     <LinearLayout
@@ -116,6 +118,7 @@
             android:textSize="20sp" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/discount_checkbox"
             android:layout_width="89dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="150dp" />

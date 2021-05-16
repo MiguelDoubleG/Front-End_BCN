@@ -32,15 +32,20 @@ public class PlacesList {
             String name = us.getString("NAME");
             String idCompany = us.getString("OWNER");
             String description = us.getString("DESCRIPTION");
-            double lat = us.getDouble("LOCAL_X");
-            double lng = us.getDouble("LOCAL_Y");
-            int maxCapacity = us.getInt("MAX_CAPACITY");
+            Double lat = us.getDouble("LOCAL_X");
+            Double lng = us.getDouble("LOCAL_Y");
+            Integer maxCapacity = us.getInt("MAX_CAPACITY");
             String schedule = us.getString("SCHEDULE");
+            String category =  us.getString("CATEGORY");
+            Integer price = Integer.parseInt(us.getString("PRICE"));
+            Float rating = Float.parseFloat(us.getString("RATING"));
+            Boolean discount = Integer.parseInt(us.getString("DISCOUNT")) == 1;
+            String address = us.getString("ADDRESS");
 
             placesList
                     .places
-                    .add(new Establishment(id, name, idCompany,
-                            description, lat, lng, maxCapacity, schedule));
+                    .add(new Establishment(id, name, idCompany, description, lat, lng,
+                            maxCapacity, schedule, category, price, rating, discount, address));
         }
     }
 
