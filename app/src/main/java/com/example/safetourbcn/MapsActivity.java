@@ -482,11 +482,11 @@ public class MapsActivity
             float rating = 0;
             for (int i = 0; i < pl.getLength() && b == 0; ++i) {
                 Establishment place = pl.getEstablishment(i);
-                if(place.getName() == marker.getTitle().toString()){
+                if(place.getName().equals(marker.getTitle())){
                     b = 1;
                     direccion = place.getAddress();
                     horario = place.getSchedule();
-                    rating = place.getRating()
+                    rating = place.getRating();
                 }
 
             }
