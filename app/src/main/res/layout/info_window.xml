@@ -23,12 +23,12 @@
         android:id="@+id/iw_rating_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
         android:layout_marginTop="11dp"
+        android:layout_marginBottom="10dp"
         android:text="0.0"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.266"
+        app:layout_constraintBottom_toTopOf="@+id/iw_adress"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iw_name"
         app:layout_constraintVertical_bias="0.0" />
@@ -43,12 +43,10 @@
         android:numStars="5"
         android:scaleX="1.5"
         android:scaleY="1.5"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.61"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iw_name"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.347"
+        app:layout_constraintStart_toEndOf="@+id/iw_rating_number"
+        app:layout_constraintTop_toBottomOf="@+id/iw_name" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -69,12 +67,10 @@
         android:layout_marginTop="13dp"
         android:text="direccion"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iw_rating"
-        app:layout_constraintVertical_bias="0.006" />
+        app:layout_constraintTop_toBottomOf="@+id/iw_rating" />
 
     <TextView
         android:id="@+id/iw_horari"
@@ -83,12 +79,10 @@
         android:layout_marginTop="17dp"
         android:text="10:00 - 11:00  12:00 - 13:00"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iw_adress"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/iw_adress" />
 
     <Button
         android:id="@+id/iw_boton_reservar"
@@ -97,12 +91,10 @@
         android:layout_marginTop="9dp"
         android:backgroundTint="#6077F1"
         android:text="@string/reserva_button"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iw_horari"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/iw_horari" />
 
     <Button
         android:id="@+id/button"
