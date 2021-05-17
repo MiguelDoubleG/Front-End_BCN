@@ -481,7 +481,7 @@ public class MapsActivity
             String horario = null;
             for (int i = 0; i < pl.getLength() && b == 0; ++i) {
                 Establishment place = pl.getEstablishment(i);
-                if(place.getName() == marker.getTitle()){
+                if(place.getName() == marker.getTitle().toString()){
                     b = 1;
                     direccion = place.getAddress();
                     horario = place.getSchedule();
