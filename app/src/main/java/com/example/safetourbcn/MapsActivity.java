@@ -475,10 +475,28 @@ public class MapsActivity
 
         @Override
         public View getInfoContents(Marker marker) {
+            PlacesList pl = PlacesList.getInstance();
+            int b = 0;
+            String direccion = null;
+            String horario = null;
+            for (int i = 0; i < pl.getLength() && b == 0; ++i) {
+                Establishment place = pl.getEstablishment(i);
+                if(place.getName() == marker.getTitle()){
+                    b = 1;
+                    direccion = place.getAddress();
+                    horario = place.getSchedule();
+                }
+
+            }
+
             TextView tvTitle = (TextView)myContentsView.findViewById(R.id.iw_name);
             tvTitle.setText(marker.getTitle());
-            //TextView tvSnippet = ((TextView)myContentsView.findViewById(R.id.snippet));
-            //tvSnippet.setText(marker.getSnippet());
+            TextView adress = ((TextView)myContentsView.findViewById(R.id.iw_adress));
+            adress.setText(direccion);
+            TextView schedule = ((TextView)myContentsView.findViewById(R.id.iw_horari));
+            schedule.setText(horario);
+
+
 
             return myContentsView;
         }

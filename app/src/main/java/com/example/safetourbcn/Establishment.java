@@ -5,14 +5,21 @@ public class Establishment {
     private String name;
     private String idCompany;
     private String description;
-    private double lat;
-    private double lng;
-    private int maxCapacity;
+    private Double lat;
+    private Double lng;
+    private Integer maxCapacity;
     private String schedule;
+    private String category;
+    private Integer price;
+    private Float  rating;
+    private Boolean discount;
+    private String address;
 
     public Establishment(){ }
 
-    public Establishment(int id, String name, String idCompany, String description, double lat, double lng, int maxCapacity, String schedule){
+    public Establishment(int id, String name, String idCompany, String description,
+                         Double lat, Double lng, Integer maxCapacity, String schedule,
+                         String category, Integer price, Float  rating, Boolean discount, String address){
         this.id = id;
         this.idCompany = idCompany;
         this.name = name;
@@ -21,6 +28,11 @@ public class Establishment {
         this.lng = lng;
         this.maxCapacity = maxCapacity;
         this.schedule = schedule;
+        this.category = category;
+        this.price = price;
+        this.rating = rating;
+        this.discount = discount;
+        this.address = address;
     }
 
     public String getName() { return name; }
@@ -41,13 +53,33 @@ public class Establishment {
         return schedule;
     }
 
-    public double getLat() { return lat; }
+    public Double getLat() { return lat; }
 
-    public double getLng() { return lng; }
+    public Double getLng() { return lng; }
 
     public String getIdCompany() {
         return idCompany;
     }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public Float getRating() {
+        return rating;
+    }
+
+    public Boolean getDiscount() {
+        return discount;
+    }
+
+    public String getAddress() { return address; }
+
+
 
     public void setDescription(String description) {
         this.description = description;
@@ -64,20 +96,4 @@ public class Establishment {
     public void setLng(double lng) { this.lng = lng; }
 
     public void setIdCompany(String idCompany) { this.idCompany = idCompany; }
-
-    public String getCategory() {
-        return null;
-    }
-
-    public Integer getPrice() {
-        return 2;
-    }
-
-    public Float getRating() {
-        return 2.5f;
-    }
-
-    public Boolean getDiscount() {
-        return false;
-    }
 }
