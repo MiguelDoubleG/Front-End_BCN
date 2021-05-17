@@ -216,11 +216,11 @@ public class MapsActivity
 
         for (int i = 0; i < pl.getLength(); ++i) {
             Establishment place = pl.getEstablishment(i);
-            boolean bCategory = category == null || category == place.getCategory();
-            boolean bDistance = distance == null || distance >= calcDistance(place);
-            boolean bPrice = price == null || price == place.getPrice();
-            boolean bRating = rating == null || rating <= place.getRating();
-            boolean bDiscount = discount == null || discount == place.getDiscount();
+            boolean bCategory = category == null || (place.getCategory() != null && category.equals(place.getCategory()));
+            boolean bDistance = distance == null || (place.getLat() != null && place.getLng() != null && distance >= calcDistance(place));
+            boolean bPrice = price == null || (place.getPrice() != null && price.equals(place.getPrice()));
+            boolean bRating = rating == null || (place.getRating() != null && rating <= place.getRating());
+            boolean bDiscount = discount == null || (place.getDiscount() != null && discount == place.getDiscount());
 
             if (bCategory && bDiscount && bDistance && bPrice && bRating)
                 map.addMarker(new MarkerOptions()
