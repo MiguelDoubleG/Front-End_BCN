@@ -28,8 +28,6 @@
     <string name="not_match">User or password are incorrect</string>
 
 
-
-
     <!--    -->
     <string name="title_activity_drawer">DrawerActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -45,7 +43,6 @@
     <string name="menu_map">Map</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_logout">Logout</string>
-
 
 
     <!-- Filter Menu -->

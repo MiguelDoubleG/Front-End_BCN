@@ -110,6 +110,7 @@ public class MapsActivity
         }
 
 
+
         /////NAV///
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -317,6 +318,10 @@ public class MapsActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
+        if (id == R.id.action_search) {
+            onSearchRequested();
+        }
 
         if (id == R.id.action_settings) {
             showFilterMenu();
