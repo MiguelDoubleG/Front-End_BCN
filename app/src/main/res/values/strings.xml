@@ -28,8 +28,6 @@
     <string name="not_match">User or password are incorrect</string>
 
 
-
-
     <!--    -->
     <string name="title_activity_drawer">DrawerActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -47,7 +45,6 @@
     <string name="menu_logout">Logout</string>
 
 
-
     <!-- Filter Menu -->
     <string name="filters">Filters</string>
     <string name="ok">Accept</string>
@@ -58,6 +55,7 @@
     <string name="category">Category</string>
     <string name="discount">Discount</string>
     <string name="reset">Reset</string>
+    <string name="search">Search</string>
 
 
     <!-- InfoWindow -->

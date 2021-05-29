@@ -13,13 +13,13 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,8 +51,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
-
-import java.util.ArrayList;
 
 public class MapsActivity
         extends AppCompatActivity
@@ -114,6 +112,7 @@ public class MapsActivity
             Session currentSession = Session.getInstance();
             currentSession.initGoogle(personName, "Google", personEmail);
         }
+
 
 
         /////NAV///
@@ -324,6 +323,10 @@ public class MapsActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        if (id == R.id.action_search) {
+            showSearch();
+        }
+
         if (id == R.id.action_settings) {
             showFilterMenu();
             return true;
@@ -383,6 +386,55 @@ public class MapsActivity
                 }
             }
         });
+    }
+    void searchEstablishments(String name, Integer distance){
+        PlacesList pl = PlacesList.getInstance();
+        map.clear();
+        for (int i = 0; i < pl.getLength(); ++i) {
+            Establishment place = pl.getEstablishment(i);
+            boolean bSearch = name == null || place.getName().toLowerCase().startsWith(name.toLowerCase());
+            boolean bDistance = distance == null || distance >= calcDistance(place);
+            if (bSearch && bDistance)
+                map.addMarker(new MarkerOptions()
+                        .position(new LatLng(place.getLat(), place.getLng()))
+                        .title(place.getName()));
+        }
+    }
+
+    void showSearch() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View viewSearch = inflater.inflate(R.layout.search, null);
+        builder.setView(viewSearch);
+        dialog = builder.create();
+        viewSearch.findViewById(R.id.cancel_search_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        viewSearch.findViewById(R.id.ok_search_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer distance = null;
+                String search = null;
+                TextView tvSearch = (TextView) viewSearch.findViewById((R.id.textSearch));
+                TextView tvDistance = (TextView) viewSearch.findViewById(R.id.textNumberDistance);
+                String sSearch = tvSearch.getText().toString();
+                String sDistance = tvDistance.getText().toString();
+                if(!sSearch.equals("")) {
+                    search = sSearch;
+                }
+                if(!sDistance.equals("")) {
+                    distance = Integer.parseInt(sDistance) * 1000;
+                }
+
+                searchEstablishments(search,distance);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
 
