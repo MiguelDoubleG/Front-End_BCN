@@ -114,7 +114,6 @@ public class MapsActivity
         }
 
 
-
         /////NAV///
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -326,7 +325,6 @@ public class MapsActivity
         if (id == R.id.action_search) {
             showSearch();
         }
-
         if (id == R.id.action_settings) {
             showFilterMenu();
             return true;
