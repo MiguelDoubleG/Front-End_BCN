@@ -30,9 +30,9 @@ public class Searchable extends ListActivity {
         PlacesList pl = PlacesList.getInstance();
         for (int i = 0; i < pl.getLength(); ++i) {
             Establishment place = pl.getEstablishment(i);
-            if (query.equals(place.getName()))
-            {
+            if (query.equals(place.getName())) {
 
             }
+        }
     }
 }
