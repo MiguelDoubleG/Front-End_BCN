@@ -59,10 +59,12 @@
     <string name="discount">Discount</string>
     <string name="reset">Reset</string>
 
-
+    <!-- Search -->
     <string name="search">Search</string>
+
+    <!-- Edit Profile -->
     <string name="editProf">EDIT</string>
-    <string name="confirm">Confirm</string>
+    <string name="save">Save</string>
 
 
     <!-- InfoWindow -->
