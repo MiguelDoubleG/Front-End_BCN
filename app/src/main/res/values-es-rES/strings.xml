@@ -64,7 +64,8 @@
     <string name="reserva_button">Reserva ya</string>
     <string name="valoraciones_button">Ver valoraciones</string>
 
-    <string-array name="filter_menu">
+    <string-array name="filter_menu_array">
+        <item>Todas</item>
         <item>Bar</item>
         <item>Restaurante</item>
     </string-array>
