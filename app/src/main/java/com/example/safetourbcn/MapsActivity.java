@@ -13,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -31,6 +32,7 @@ import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -54,7 +56,7 @@ import org.json.JSONException;
 
 public class MapsActivity
         extends AppCompatActivity
-        implements GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback {
+        implements GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap map;
     private final BackEndRequests ber = BackEndRequests.getInstance();
@@ -176,6 +178,7 @@ public class MapsActivity
 
         map.setOnMyLocationButtonClickListener(this);
         map.setOnMyLocationClickListener(this);
+        map.setOnInfoWindowClickListener(this);
 
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -511,9 +514,19 @@ public class MapsActivity
     }
 
 
+    public void valoraciones_activity(){
+
+    }
     /////////////
     //INFOWINDOW
     //////////////
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Intent intent = new Intent(this, Valoraciones.class);
+        intent.putExtra("establishment", marker.getTitle());
+        startActivity(intent);
+    }
 
     class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
@@ -551,6 +564,7 @@ public class MapsActivity
             rating_stars.setRating(rating);
             TextView rating_number = ((TextView)myContentsView.findViewById(R.id.iw_rating_number));
             rating_number.setText(String.valueOf(rating));
+
 
             return myContentsView;
         }

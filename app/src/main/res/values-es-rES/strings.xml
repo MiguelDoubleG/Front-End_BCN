@@ -60,8 +60,7 @@
     <string name="reset">Restablecer</string>
     <string name="search">Buscar</string>
 >
-    <string name="reserva_button">Reserva ya</string>
-    <string name="valoraciones_button">Ver valoraciones</string>
+    <string name="reserva_button">Acceder al establecimiento</string>
 
     <string-array name="filter_menu_array">
         <item>Todas</item>
