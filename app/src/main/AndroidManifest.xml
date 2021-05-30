@@ -21,13 +21,19 @@
         android:theme="@style/Theme.SafeTourBCN"
         android:usesCleartextTraffic="true">
 
+        <activity
+            android:name=".DrawerActivity"
+            android:label="@string/title_activity_drawer"
+            android:theme="@style/Theme.SafeTourBCN.NoActionBar" ></activity>
+        <activity
+            android:name=".PerfilUsuarioActivity"
+            android:parentActivityName=".MapsActivity">
 
-
-
-
-
-
-        <activity android:name=".PerfilUsuarioActivity" />
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MapsActivity" />
+        </activity>
         <activity
             android:name=".SignUpActivity"
             android:parentActivityName=".ui.login.LoginActivity">
@@ -63,7 +69,6 @@
             android:label="@string/title_activity_maps"
             android:theme="@style/Theme.SafeTourBCN.NoActionBar" >
         </activity>
-
     </application>
 
 </manifest>

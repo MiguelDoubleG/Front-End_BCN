@@ -58,6 +58,11 @@
     <string name="category">Categoría</string>
     <string name="discount">Descuento</string>
     <string name="reset">Restablecer</string>
+    <string name="search">Buscar</string>
+    <string name="editProf">EDITAR</string>
+    <string name="confirm">Confirmar</string>
+    <string name="reserva_button">Reserva ya</string>
+    <string name="valoraciones_button">Ver valoraciones</string>
 
     <string-array name="filter_menu">
         <item>Bar</item>

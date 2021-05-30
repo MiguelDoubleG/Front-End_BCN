@@ -55,7 +55,11 @@
     <string name="category">Category</string>
     <string name="discount">Discount</string>
     <string name="reset">Reset</string>
+
+
     <string name="search">Search</string>
+    <string name="editProf">EDIT</string>
+    <string name="confirm">Confirm</string>
 
     <string-array name="filter_menu">
         <item>Bar</item>
