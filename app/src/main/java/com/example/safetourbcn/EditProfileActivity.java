@@ -20,12 +20,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
         String correo = session.getEmail();
         int N = correo.length();
-        correoTextView.setText(correo.toCharArray(), 0, N-1);
+        correoTextView.setText(correo.toCharArray(), 0, N);
         /* user must be the name of the current user*/
 
         String usuario = session.getName();
         int M = usuario.length();
-        nombreTextView.setText(usuario.toCharArray(), 0, M-1);
+        nombreTextView.setText(usuario.toCharArray(), 0, M);
     }
     public void save(View view) {
         final TextView nombreTextView = findViewById(R.id.nombre);

@@ -26,7 +26,7 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
 
         String usuario = session.getName();
         int M = usuario.length();
-        nombreTextView.setText(usuario.toCharArray(), 0, M-1);
+        nombreTextView.setText(usuario.toCharArray(), 0, M);
     }
     public void editProfile(View view) {
         Intent intent = new Intent(this, EditProfileActivity.class);
