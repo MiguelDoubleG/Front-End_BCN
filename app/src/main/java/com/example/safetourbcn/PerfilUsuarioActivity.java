@@ -21,7 +21,7 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
 
         String correo = session.getEmail();
         int N = correo.length();
-        correoTextView.setText(correo.toCharArray(), 0, N-1);
+        correoTextView.setText(correo.toCharArray(), 0, N   );
         /* usuario tiene que ser el nombre del usuario actual*/
 
         String usuario = session.getName();

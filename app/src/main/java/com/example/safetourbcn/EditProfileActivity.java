@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class EditProfileActivity extends AppCompatActivity {
     Session session = Session.getInstance();
-    //BackEndRequests ber = BackEndRequests.getInstance();
+    BackEndRequests ber = BackEndRequests.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,5 +31,6 @@ public class EditProfileActivity extends AppCompatActivity {
         final TextView nombreTextView = findViewById(R.id.nombre);
         String newUsername = nombreTextView.getText().toString();
         session.editUserName(newUsername);
+        ber.editUser(session.getEmail(),newUsername);
     }
 }
