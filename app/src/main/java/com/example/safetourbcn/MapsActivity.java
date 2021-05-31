@@ -408,6 +408,13 @@ public class MapsActivity
         View viewSearch = inflater.inflate(R.layout.search, null);
         builder.setView(viewSearch);
         dialog = builder.create();
+        viewSearch.findViewById(R.id.reset_search_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tvDistance = (TextView) viewSearch.findViewById(R.id.textNumberDistance);
+                tvDistance.setText("0");
+            }
+        });
         viewSearch.findViewById(R.id.cancel_search_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

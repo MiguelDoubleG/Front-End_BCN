@@ -26,6 +26,9 @@ public class Session {
         currentUser = new UsuarioIndividual(name, password, email);
     }
 
+    public void editUserName(String name) {
+        currentUser.setNombre(name);
+    }
 
     public String getName() { return currentUser.getNombre();}
 

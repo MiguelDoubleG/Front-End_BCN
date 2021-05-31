@@ -58,9 +58,17 @@
     <string name="category">Categoría</string>
     <string name="discount">Descuento</string>
     <string name="reset">Restablecer</string>
+
+    <!-- Search -->
     <string name="search">Buscar</string>
->
-    <string name="reserva_button">Acceder al establecimiento</string>
+
+    <!-- Edit Profile -->
+    <string name="editProf">EDITAR</string>
+    <string name="save">Save</string>
+
+    <!-- InfoWindow -->
+    <string name="reserva_button">Reserva ya</string>
+    <string name="valoraciones_button">Ver valoraciones</string>
 
     <string-array name="filter_menu_array">
         <item>Todas</item>
