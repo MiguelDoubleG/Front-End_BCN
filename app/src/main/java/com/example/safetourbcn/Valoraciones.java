@@ -2,10 +2,11 @@ package com.example.safetourbcn;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 public class Valoraciones extends AppCompatActivity {
 
@@ -38,5 +39,17 @@ public class Valoraciones extends AppCompatActivity {
         dir_establish.setText(direccion);
         final TextView horari = findViewById(R.id.horario);
         horari.setText(horario);
+    }
+    public void goToInsta (View view) {
+        String url = "http://www.instagram.com";
+        Uri uriUrl = Uri.parse(url);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+        startActivity(launchBrowser);
+    }
+    public void goToUrl (View view) {
+        String url = "http://www.google.com";
+        Uri uriUrl = Uri.parse(url);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+        startActivity(launchBrowser);
     }
 }
