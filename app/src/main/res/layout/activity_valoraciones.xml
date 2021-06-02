@@ -41,12 +41,13 @@
 
             <TextView
                 android:id="@+id/texto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="286dp"
+                android:layout_height="54dp"
                 android:layout_marginTop="180dp"
                 android:text="@string/text"
+                android:textAlignment="center"
                 android:textColor="#2B2B2B"
-                android:textSize="40sp"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -80,9 +81,19 @@
                 android:id="@+id/calendarView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="232dp"
+                android:layout_marginTop="248dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.491"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="130dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="584dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.861"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class Valoraciones extends AppCompatActivity {
@@ -36,6 +37,7 @@ public class Valoraciones extends AppCompatActivity {
         }
         final TextView dir_establish = findViewById(R.id.direccion_establecimiento);
         dir_establish.setText(direccion);
+        final Spinner spinner = findViewById(R.id.spinner);
 
     }
     public void goToInsta (View view) {

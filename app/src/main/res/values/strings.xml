@@ -68,7 +68,7 @@
     <string name="reserva_button">Access establishment</string>
 
     <!-- Establishment -->
-    <string name="text">text</string>
+    <string name="text">Do you want to reserve? Choose a date and a group</string>
 
     <string-array name="filter_menu_array">
         <item>All</item>

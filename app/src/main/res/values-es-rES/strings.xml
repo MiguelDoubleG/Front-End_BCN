@@ -70,7 +70,7 @@
     <string name="reserva_button">Reserva ya</string>
 
     <!-- Establishment -->
-    <string name="text">text</string>
+    <string name="text">¿Quieres reservar tu visita? Escoge un día y un grupo</string>
 
     <string-array name="filter_menu_array">
         <item>Todas</item>
