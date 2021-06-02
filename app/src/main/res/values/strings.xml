@@ -59,7 +59,8 @@
     <!-- Search -->
     <string name="search">Search</string>
 
-    <!-- Edit Profile -->
+    <!-- Profile -->
+    <string name="userProf">User Profile</string>
     <string name="editProf">EDIT</string>
     <string name="save">Save</string>
 

@@ -63,6 +63,7 @@
     <string name="search">Buscar</string>
 
     <!-- Edit Profile -->
+    <string name="userProf">Perfil de Usuario</string>
     <string name="editProf">EDITAR</string>
     <string name="save">Save</string>
 
