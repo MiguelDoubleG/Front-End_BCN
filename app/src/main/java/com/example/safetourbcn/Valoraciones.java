@@ -6,11 +6,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+
 public class Valoraciones extends AppCompatActivity {
 
+    private String insta = null, web = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,24 +38,48 @@ public class Valoraciones extends AppCompatActivity {
                 direccion = place.getAddress();
                 horaapertura = place.getHouropen();
                 horacierre = place.getHourclose();
+                web = place.getWebsite();
+                insta = place.getInstagram();
             }
 
         }
         final TextView dir_establish = findViewById(R.id.direccion_establecimiento);
         dir_establish.setText(direccion);
         final Spinner spinner = findViewById(R.id.spinner);
+        ArrayList<String> arrayList = new ArrayList<>();
+        for(int i = horaapertura; i<= horacierre; i++){
+            arrayList.add(Integer.toString(i)+"h");
+        }
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayAdapter);
 
     }
     public void goToInsta (View view) {
-        String url = "http://www.instagram.com";
-        Uri uriUrl = Uri.parse(url);
-        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-        startActivity(launchBrowser);
+        if (insta.length()>1)
+        {
+            String url = insta;
+            Uri uriUrl = Uri.parse(url);
+            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+            startActivity(launchBrowser);
+        }
+        else
+        {
+            Snackbar mySnack = Snackbar.make(view, "This establishment doesn't have an Instagram", 2000);
+            mySnack.show();
+        }
     }
     public void goToUrl (View view) {
-        String url = "http://www.google.com";
-        Uri uriUrl = Uri.parse(url);
-        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-        startActivity(launchBrowser);
+        if(web.length()>1) {
+            String url = web;
+            Uri uriUrl = Uri.parse(url);
+            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+            startActivity(launchBrowser);
+        }
+        else
+        {
+            Snackbar mySnack = Snackbar.make(view, "This establishment doesn't have a Website", 2000);
+            mySnack.show();
+        }
     }
 }
