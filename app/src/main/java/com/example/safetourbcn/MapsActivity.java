@@ -414,14 +414,13 @@ public class MapsActivity
             }
         });
     }
-    void searchEstablishments(String name, Integer distance){
+    void searchEstablishments(String name){
         PlacesList pl = PlacesList.getInstance();
         map.clear();
         for (int i = 0; i < pl.getLength(); ++i) {
             Establishment place = pl.getEstablishment(i);
             boolean bSearch = name == null || place.getName().toLowerCase().startsWith(name.toLowerCase());
-            boolean bDistance = distance == null || distance >= calcDistance(place);
-            if (bSearch && bDistance)
+            if (bSearch)
                 map.addMarker(new MarkerOptions()
                         .position(new LatLng(place.getLat(), place.getLng()))
                         .title(place.getName()));
@@ -434,13 +433,6 @@ public class MapsActivity
         View viewSearch = inflater.inflate(R.layout.search, null);
         builder.setView(viewSearch);
         dialog = builder.create();
-        viewSearch.findViewById(R.id.reset_search_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView tvDistance = (TextView) viewSearch.findViewById(R.id.textNumberDistance);
-                tvDistance.setText("0");
-            }
-        });
         viewSearch.findViewById(R.id.cancel_search_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -450,20 +442,13 @@ public class MapsActivity
         viewSearch.findViewById(R.id.ok_search_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer distance = null;
                 String search = null;
                 TextView tvSearch = (TextView) viewSearch.findViewById((R.id.textSearch));
-                TextView tvDistance = (TextView) viewSearch.findViewById(R.id.textNumberDistance);
                 String sSearch = tvSearch.getText().toString();
-                String sDistance = tvDistance.getText().toString();
                 if(!sSearch.equals("")) {
                     search = sSearch;
                 }
-                if(!sDistance.equals("")) {
-                    distance = Integer.parseInt(sDistance) * 1000;
-                }
-
-                searchEstablishments(search,distance);
+                searchEstablishments(search);
                 dialog.dismiss();
             }
         });

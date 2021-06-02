@@ -59,6 +59,9 @@
     <!-- Search -->
     <string name="search">Search</string>
 
+    <!-- Valoraciones -->
+    <string name="ratings">Ratings</string>
+
     <!-- Profile -->
     <string name="userProf">User Profile</string>
     <string name="password">Password:</string>
