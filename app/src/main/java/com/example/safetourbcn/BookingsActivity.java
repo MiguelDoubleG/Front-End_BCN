@@ -1,10 +1,16 @@
 package com.example.safetourbcn;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -23,20 +29,30 @@ public class BookingsActivity extends AppCompatActivity {
     Session session = Session.getInstance();
     BackEndRequests ber = BackEndRequests.getInstance();
     AppBarConfiguration appBarConfiguration;
-    ArrayList<String> bookingList;
+    ArrayList<JSONObject> bookingList;
     BackEndRequests backEndRequests = BackEndRequests.getInstance();
+    RecyclerView mRecentRecyclerView;
+    LinearLayoutManager mRecentLayoutManager;
+    RecyclerView.Adapter<CustomViewHolder> mAdapter;
+    PlacesList placesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookings);
+        placesList = PlacesList.getInstance();
+        bookingList = new ArrayList<>();
+        getBookingsList();
+        setInfoToList();
+        mRecentRecyclerView = (RecyclerView) findViewById(R.id.bookingsList);
+        //mRecentRecyclerView.setHasFixedSize(true);
+        mRecentLayoutManager = new LinearLayoutManager(this);
+        mRecentRecyclerView.setLayoutManager(mRecentLayoutManager);
+        mRecentRecyclerView.setAdapter(mAdapter);
 
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.bookingsActivity)
                 .build();
-
-        getBookingsList();
-
     }
 
 
@@ -69,10 +85,11 @@ public class BookingsActivity extends AppCompatActivity {
                         JSONArray ja = new JSONArray(r);
                         for(int i = 0; i < ja.length(); ++i) {
                             JSONObject jo = ja.getJSONObject(i);
-
+                            bookingList.add(jo);
                             print(jo);
                         }
 
+                        setInfoToList();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -88,5 +105,52 @@ public class BookingsActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+
+
+    void setInfoToList() {
+        mAdapter = new RecyclerView.Adapter<CustomViewHolder>() {
+            @Override
+            public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+                View view = LayoutInflater
+                        .from(viewGroup.getContext())
+                        .inflate(R.layout.booking_view, viewGroup, false);
+                return new CustomViewHolder(view);
+            }
+
+            @Override
+            public void onBindViewHolder(CustomViewHolder viewHolder, int i) {
+
+                try {
+                    Establishment e = placesList
+                            .getEstablishmentById(bookingList.get(i).getInt("ID_RESERVATION"));
+
+                    viewHolder.nom.setText(e.getName());
+                    viewHolder.desc.setText(bookingList.get(i).getString("RESERVATION_DATE"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public int getItemCount() {
+                return bookingList.size();
+            }
+
+        };
+        mAdapter.notifyItemInserted(bookingList.size() - 1);
+    }
+
+    private class CustomViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView nom;
+        private TextView desc;
+
+        public CustomViewHolder(View itemView) {
+            super(itemView);
+            nom = (TextView) itemView.findViewById(R.id.nomEstablishmentBooking);
+            desc = (TextView) itemView.findViewById(R.id.infoEstablishmentBooking);
+        }
     }
 }

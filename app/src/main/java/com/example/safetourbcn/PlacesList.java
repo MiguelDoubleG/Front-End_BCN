@@ -53,5 +53,14 @@ public class PlacesList {
 
     public int getLength() { return places.size(); }
 
+    public Establishment getEstablishmentById(int i) {
+        Establishment e = places.stream()
+                .filter(est -> i == est.getId())
+                .findFirst()
+                .orElse(null);
+
+        return e;
+    }
+
     public Establishment getEstablishment(int i) { return places.get(i); }
 }

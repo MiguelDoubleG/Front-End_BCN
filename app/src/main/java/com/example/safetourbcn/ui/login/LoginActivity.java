@@ -225,12 +225,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if(response.isSuccessful()) {
                     String bodyString = response.body().string();
-                    if(bodyString != null)session.setApiKey(bodyString);
+                    if(bodyString != null) session.setApiKey(bodyString);
                     sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
                     sharedPreferences.edit().putString("token", bodyString).commit();
 
                     sharedPreferences = getSharedPreferences("email", MODE_PRIVATE);
                     sharedPreferences.edit().putString("email", user).commit();
+
+                    getUser(user);
                 }
                 //else showErrorMatch();
             }
