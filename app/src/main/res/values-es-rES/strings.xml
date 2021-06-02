@@ -71,6 +71,8 @@
 
     <!-- Establishment -->
     <string name="text">¿Quieres reservar tu visita? Escoge un día y un grupo</string>
+    <string name="text2">¿Cuántas plazas?</string>
+    <string name="button">Reservar ya</string>
 
     <string-array name="filter_menu_array">
         <item>Todas</item>

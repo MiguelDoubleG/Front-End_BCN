@@ -12,19 +12,19 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imageView6"
-                android:layout_width="73dp"
-                android:layout_height="66dp"
+                android:layout_width="47dp"
+                android:layout_height="47dp"
                 android:onClick="goToUrl"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.952"
+                app:layout_constraintHorizontal_bias="0.958"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.035"
+                app:layout_constraintVertical_bias="0.016"
                 app:srcCompat="@drawable/internet" />
 
             <TextView
@@ -43,12 +43,13 @@
                 android:id="@+id/texto"
                 android:layout_width="286dp"
                 android:layout_height="54dp"
-                android:layout_marginTop="180dp"
+                android:layout_marginTop="164dp"
                 android:text="@string/text"
                 android:textAlignment="center"
                 android:textColor="#2B2B2B"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,8 +67,8 @@
 
             <ImageView
                 android:id="@+id/imageView5"
-                android:layout_width="131dp"
-                android:layout_height="102dp"
+                android:layout_width="93dp"
+                android:layout_height="66dp"
                 android:onClick="goToInsta"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -78,10 +79,10 @@
                 app:srcCompat="@drawable/insta" />
 
             <CalendarView
-                android:id="@+id/calendarView2"
+                android:id="@+id/calendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="248dp"
+                android:layout_marginTop="228dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.491"
                 app:layout_constraintStart_toStartOf="parent"
@@ -91,9 +92,50 @@
                 android:id="@+id/spinner"
                 android:layout_width="130dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="584dp"
+                android:layout_marginTop="564dp"
+                android:textAlignment="textEnd"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.861"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/number"
+                android:layout_width="65dp"
+                android:layout_height="43dp"
+                android:layout_marginTop="588dp"
+                android:digits="1,2,3,4,5,6,7,8,9"
+                android:ems="10"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textAlignment="textEnd"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.861"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/texto2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="600dp"
+                android:text="@string/text2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button_reservar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="644dp"
+                android:backgroundTint="#DC6700"
+                android:text="@string/button"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,17 @@
 package com.example.safetourbcn;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -47,14 +52,41 @@ public class Valoraciones extends AppCompatActivity {
         dir_establish.setText(direccion);
         final Spinner spinner = findViewById(R.id.spinner);
         ArrayList<String> arrayList = new ArrayList<>();
-        for(int i = horaapertura; i<= horacierre; i++){
+        for(int i = horaapertura; i< horacierre; i++){
             arrayList.add(Integer.toString(i)+"h");
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
 
+        final CalendarView calendario= findViewById(R.id.calendar);
+        final EditText number = findViewById(R.id.number);
+        final Button button = findViewById(R.id.button_reservar);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String texto = spinner.getSelectedItem().toString();
+                if(number.getText().toString().equals("")) {
+                    specify_number();
+                }
+                else{
+
+                }
+            }
+        });
+
     }
+    public void hey() {
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
+
+    public void specify_number(){
+        AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle("You have to specify a number of people").setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        }).show();
+    }
+
     public void goToInsta (View view) {
         if (insta.length()>1)
         {

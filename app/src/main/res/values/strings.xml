@@ -69,6 +69,8 @@
 
     <!-- Establishment -->
     <string name="text">Do you want to reserve? Choose a date and a group</string>
+    <string name="text2">How many people?</string>
+    <string name="button">Reserve now</string>
 
     <string-array name="filter_menu_array">
         <item>All</item>
