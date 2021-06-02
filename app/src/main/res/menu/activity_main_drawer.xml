@@ -9,6 +9,10 @@
             android:icon="@drawable/explore_black_24dp"
             android:title="@string/menu_map" />
         <item
+            android:id="@+id/bookingsActivity"
+            android:icon="@drawable/outline_event_black_48dp"
+            android:title="@string/bookings" />
+        <item
             android:id="@+id/perfilUsuarioActivity"
             android:icon="@drawable/account_circle_black_24dp"
             android:title="@string/menu_profile" />

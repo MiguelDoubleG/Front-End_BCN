@@ -83,4 +83,5 @@
         <item>Bar</item>
         <item>Restaurante</item>
     </string-array>
+    <string name="bookings">Reservas</string>
 </resources>
