@@ -15,6 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -33,6 +34,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.safetourbcn.ui.login.LoginActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -61,7 +63,7 @@ public class MapsActivity
     private GoogleMap map;
     private final BackEndRequests ber = BackEndRequests.getInstance();
     private AppBarConfiguration mAppBarConfiguration;
-    private Session session;
+    private Session session = Session.getInstance();
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location currentLocation;
     private LocationManager locationManager;
@@ -132,7 +134,7 @@ public class MapsActivity
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -340,9 +342,18 @@ public class MapsActivity
     }
 
 
+
     public void logout(View view) {
         // Do something in response to button
-        Intent intent = new Intent(this, SignUpActivity.class);
+        SharedPreferences sharedPreferences;
+
+        sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
+        sharedPreferences.edit().clear().commit();
+
+        sharedPreferences = getSharedPreferences("email", MODE_PRIVATE);
+        sharedPreferences.edit().clear().commit();
+
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 

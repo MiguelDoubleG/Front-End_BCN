@@ -27,6 +27,10 @@
         </activity>
         <activity android:name=".PerfilUsuarioActivity" />
         <activity
+            android:name=".BookingsActivity"
+            android:label="@string/bookings"
+            />
+        <activity
             android:name=".SignUpActivity"
             android:parentActivityName=".ui.login.LoginActivity" >
 
