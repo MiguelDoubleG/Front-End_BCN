@@ -8,7 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 public class Valoraciones extends AppCompatActivity {
+    String web = null;
+    String insta = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,8 @@ public class Valoraciones extends AppCompatActivity {
                 direccion = place.getAddress();
                 horaapertura = place.getHouropen();
                 horacierre = place.getHourclose();
+                web = place.getWebsite();
+                insta = place.getInstagram();
             }
 
         }
@@ -40,15 +46,30 @@ public class Valoraciones extends AppCompatActivity {
         horari.setText(horaapertura.toString() + "h - " + horacierre.toString() + "h");
     }
     public void goToInsta (View view) {
-        String url = "http://www.instagram.com";
-        Uri uriUrl = Uri.parse(url);
-        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-        startActivity(launchBrowser);
+        if (insta.length()>1)
+        {
+            String url = insta;
+            Uri uriUrl = Uri.parse(url);
+            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+            startActivity(launchBrowser);
+        }
+        else
+        {
+            Snackbar mySnack = Snackbar.make(view, "This establishment doesn't have an Instagram", 2000);
+            mySnack.show();
+        }
     }
     public void goToUrl (View view) {
-        String url = "http://www.google.com";
-        Uri uriUrl = Uri.parse(url);
-        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-        startActivity(launchBrowser);
+        if(web.length()>1) {
+            String url = web;
+            Uri uriUrl = Uri.parse(url);
+            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+            startActivity(launchBrowser);
+        }
+        else
+        {
+            Snackbar mySnack = Snackbar.make(view, "This establishment doesn't have a Website", 2000);
+            mySnack.show();
+        }
     }
 }

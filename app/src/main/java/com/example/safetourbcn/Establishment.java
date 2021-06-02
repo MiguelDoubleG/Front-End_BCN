@@ -79,13 +79,9 @@ public class Establishment {
 
     public Integer getHourclose() { return hourclose; }
 
-    public String getInstagram() {
-        return instagram;
-    }
+    public String getInstagram() { return instagram; }
 
-    public String getWebsite() {
-        return website;
-    }
+    public String getWebsite() { return website; }
 
     public void setDescription(String description) {
         this.description = description;
