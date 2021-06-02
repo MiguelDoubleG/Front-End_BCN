@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
+
 public class EditProfileActivity extends AppCompatActivity {
     Session session = Session.getInstance();
     BackEndRequests ber = BackEndRequests.getInstance();
@@ -16,6 +18,7 @@ public class EditProfileActivity extends AppCompatActivity {
         //final TextView correoTextView = findViewById(R.id.correo);
         final TextView correoTextView = findViewById(R.id.correo);
         final TextView nombreTextView = findViewById(R.id.nombre);
+
         /* email must be the user of the current user*/
 
         String correo = session.getEmail();
@@ -32,5 +35,20 @@ public class EditProfileActivity extends AppCompatActivity {
         String newUsername = nombreTextView.getText().toString();
         session.editUserName(newUsername);
         ber.editUser(session.getEmail(),newUsername);
+
+
+        final TextView passwordTextView = findViewById(R.id.password);
+        String password = passwordTextView.getText().toString();
+        final TextView newPasswordTextView = findViewById(R.id.new_password);
+        String newPassword = newPasswordTextView.getText().toString();
+        if(newPassword.length()>1) {
+            if (password.equals(session.getPassword())) {
+                session.editPassword(newPassword);
+                ber.editUserPass(session.getEmail(), newPassword);
+            } else {
+                Snackbar mySnack = Snackbar.make(view, "Incorrect Password - Password not edited", 2000);
+                mySnack.show();
+            }
+        }
     }
 }

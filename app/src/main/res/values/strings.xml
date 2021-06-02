@@ -61,6 +61,9 @@
 
     <!-- Profile -->
     <string name="userProf">User Profile</string>
+    <string name="password">Password:</string>
+    <string name="editPassword">Enter your password</string>
+    <string name="editPassword2">Enter your new password</string>
     <string name="editProf">EDIT</string>
     <string name="save">Save</string>
 

@@ -64,6 +64,9 @@
 
     <!-- Edit Profile -->
     <string name="userProf">Perfil de Usuario</string>
+    <string name="password">Contraseña:</string>
+    <string name="editPassword">Introduce tu contraseña para editarla</string>
+    <string name="editPassword2">Introduce tu contraseña nueva</string>
     <string name="editProf">EDITAR</string>
     <string name="save">Save</string>
 
