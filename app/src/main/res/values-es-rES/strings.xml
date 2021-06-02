@@ -68,7 +68,9 @@
 
     <!-- InfoWindow -->
     <string name="reserva_button">Reserva ya</string>
-    <string name="valoraciones_button">Ver valoraciones</string>
+
+    <!-- Establishment -->
+    <string name="text">text</string>
 
     <string-array name="filter_menu_array">
         <item>Todas</item>

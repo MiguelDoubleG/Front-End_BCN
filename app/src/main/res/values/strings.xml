@@ -67,6 +67,9 @@
     <!-- InfoWindow -->
     <string name="reserva_button">Access establishment</string>
 
+    <!-- Establishment -->
+    <string name="text">text</string>
+
     <string-array name="filter_menu_array">
         <item>All</item>
         <item>Bar</item>
