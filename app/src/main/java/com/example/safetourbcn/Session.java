@@ -46,6 +46,6 @@ public class Session {
     }
 
     public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
+        this.apiKey = "Bearer " + apiKey;
     }
 }

@@ -54,7 +54,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MapsActivity
         extends AppCompatActivity
@@ -227,7 +237,8 @@ public class MapsActivity
             if (bCategory && bDiscount && bDistance && bPrice)
                 map.addMarker(new MarkerOptions()
                         .position(new LatLng(place.getLat(), place.getLng()))
-                        .title(place.getName()));
+                        .title(place.getName()))
+                        .setSnippet(Integer.toString(place.getId()));
         }
     }
 
@@ -563,6 +574,7 @@ public class MapsActivity
                     direccion = place.getAddress();
                     horaapertura = place.getHouropen();
                     horacierre = place.getHourclose();
+                    getAvgRating(place.getId());
                 }
 
             }
@@ -582,6 +594,59 @@ public class MapsActivity
         public View getInfoWindow(Marker marker) {
             // TODO Auto-generated method stub
             return null;
+        }
+
+
+
+
+
+
+        void getAvgRating(Integer i) {
+            String url = ber.getServerAddress() + "/Establishment/" + Integer.toString(i) + "/AverageRating";
+            Request request = new Request.Builder()
+                    .url(url)
+                    .addHeader("AUTHORIZATION", session.getApiKey())
+                    .build();
+
+            ber.getClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    e.printStackTrace();
+                    ber.setErrorMsg("connection");
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    if(response.isSuccessful()) {
+                        System.out.println("ddddddddddddddx");
+                        String r = response.body().string();
+                        System.out.println("response: " + r);
+
+                        try {
+                            JSONArray ja = new JSONArray(r);
+                            for(int i = 0; i < ja.length(); ++i) {
+                                JSONObject jo = ja.getJSONObject(i);
+                                System.out.println(jo.toString());
+                                double rating = jo.isNull("AVG(VALUE)") ? 0.0 : jo.getDouble("AVG(VALUE)");
+                                RatingBar ratingBar = (RatingBar) myContentsView.findViewById(R.id.iw_rating);
+                                ratingBar.setRating((float) rating);
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            ber.setErrorMsg("connection");
+                        }
+                    }
+
+                    else {
+                        String r = response.body().string();
+                        System.out.println("response: " + r);
+                        System.out.println("token " + "Bearer " + session.getApiKey());
+                    }
+                }
+
+            });
         }
 
     }

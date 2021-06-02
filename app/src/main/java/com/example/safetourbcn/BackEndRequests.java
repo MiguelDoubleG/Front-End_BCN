@@ -265,6 +265,48 @@ public class BackEndRequests {
     public OkHttpClient getClient() {
         return client;
     }
+
+
+
+
+    public void guardaReserva(Integer id, String user, Integer count, String rd, String rh) {
+        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+        JSONObject newName = new JSONObject();
+        String url = serverAddress + "/registerReservation";
+
+        try {
+            newName.put("id_establishment", id);
+            newName.put("username", user);
+            newName.put("people_count", count);
+            newName.put("reservation_date", rd);
+            newName.put("reservation_hour", rh);
+        } catch (JSONException e) {
+            Log.d("OKHTTP3", "JSON Excepton");
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(newName.toString(), JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+                errorMsg = "connection";
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if(response.isSuccessful()) {
+                    String TAG = "aa";
+                    Log.d(TAG,response.message());
+                }
+            }
+        });
+    }
 }
 
 

@@ -45,7 +45,7 @@ public class BookingsActivity extends AppCompatActivity {
     }
 
     public void getBookingsList() {
-        String url = ber.getServerAddress() + "/Users/Reservations";
+        String url = ber.getServerAddress() + "/User/Reservations";
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("AUTHORIZATION", session.getApiKey())
@@ -63,6 +63,7 @@ public class BookingsActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     System.out.println("ddddddddddddddx");
                     String r = response.body().string();
+                    System.out.println("response: " + r);
 
                     try {
                         JSONArray ja = new JSONArray(r);
@@ -81,7 +82,8 @@ public class BookingsActivity extends AppCompatActivity {
 
                 else {
                     String r = response.body().string();
-                    System.out.println(r);
+                    System.out.println("response: " + r);
+                    System.out.println("token " + "Bearer " + session.getApiKey());
                 }
             }
 
