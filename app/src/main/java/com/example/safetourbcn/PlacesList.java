@@ -35,17 +35,19 @@ public class PlacesList {
             Double lat = us.getDouble("LOCAL_X");
             Double lng = us.getDouble("LOCAL_Y");
             Integer maxCapacity = us.getInt("MAX_CAPACITY");
-            String schedule = us.getString("SCHEDULE");
+            Integer houropen = us.getInt("HOUROPEN");
+            Integer hourclose = us.getInt("HOURCLOSE");
             String category =  us.getString("CATEGORY");
             Integer price = Integer.parseInt(us.getString("PRICE"));
-            Float rating = Float.parseFloat(us.getString("RATING"));
             Boolean discount = Integer.parseInt(us.getString("DISCOUNT")) == 1;
             String address = us.getString("ADDRESS");
+            String website = us.getString("WEBSITE");
+            String instagram = us.getString("INSTAGRAM");
 
             placesList
                     .places
                     .add(new Establishment(id, name, idCompany, description, lat, lng,
-                            maxCapacity, schedule, category, price, rating, discount, address));
+                            maxCapacity, houropen, hourclose, category, price, discount, address, website, instagram));
         }
     }
 

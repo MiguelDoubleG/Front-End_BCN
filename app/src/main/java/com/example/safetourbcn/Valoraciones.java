@@ -23,22 +23,21 @@ public class Valoraciones extends AppCompatActivity {
         PlacesList pl = PlacesList.getInstance();
         int b = 0;
         String direccion = null;
-        String horario = null;
-        float rating = 0;
+        Integer horaapertura = null, horacierre = null;
         for (int i = 0; i < pl.getLength() && b == 0; ++i) {
             Establishment place = pl.getEstablishment(i);
             if(place.getName().equals(name_establish.getText())){
                 b = 1;
                 direccion = place.getAddress();
-                horario = place.getSchedule();
-                rating = place.getRating();
+                horaapertura = place.getHouropen();
+                horacierre = place.getHourclose();
             }
 
         }
         final TextView dir_establish = findViewById(R.id.direccion_establecimiento);
         dir_establish.setText(direccion);
         final TextView horari = findViewById(R.id.horario);
-        horari.setText(horario);
+        horari.setText(horaapertura.toString() + "h - " + horacierre.toString() + "h");
     }
     public void goToInsta (View view) {
         String url = "http://www.instagram.com";

@@ -220,10 +220,9 @@ public class MapsActivity
             boolean bCategory = category == null || (place.getCategory() != null && category.equals(place.getCategory()));
             boolean bDistance = distance == null || (place.getLat() != null && place.getLng() != null && distance >= calcDistance(place));
             boolean bPrice = price == null || (place.getPrice() != null && price.equals(place.getPrice()));
-            boolean bRating = rating == null || (place.getRating() != null && rating <= place.getRating());
             boolean bDiscount = discount == null || (place.getDiscount() != null && discount == place.getDiscount());
 
-            if (bCategory && bDiscount && bDistance && bPrice && bRating)
+            if (bCategory && bDiscount && bDistance && bPrice)
                 map.addMarker(new MarkerOptions()
                         .position(new LatLng(place.getLat(), place.getLng()))
                         .title(place.getName()));
@@ -521,9 +520,6 @@ public class MapsActivity
     }
 
 
-    public void valoraciones_activity(){
-
-    }
     /////////////
     //INFOWINDOW
     //////////////
@@ -548,15 +544,14 @@ public class MapsActivity
             PlacesList pl = PlacesList.getInstance();
             int b = 0;
             String direccion = null;
-            String horario = null;
-            float rating = 0;
+            Integer horaapertura = null, horacierre = null;
             for (int i = 0; i < pl.getLength() && b == 0; ++i) {
                 Establishment place = pl.getEstablishment(i);
                 if(place.getName().equals(marker.getTitle())){
                     b = 1;
                     direccion = place.getAddress();
-                    horario = place.getSchedule();
-                    rating = place.getRating();
+                    horaapertura = place.getHouropen();
+                    horacierre = place.getHourclose();
                 }
 
             }
@@ -566,11 +561,7 @@ public class MapsActivity
             TextView adress = ((TextView)myContentsView.findViewById(R.id.iw_adress));
             adress.setText(direccion);
             TextView schedule = ((TextView)myContentsView.findViewById(R.id.iw_horari));
-            schedule.setText(horario);
-            RatingBar rating_stars = ((RatingBar)myContentsView.findViewById(R.id.iw_rating));
-            rating_stars.setRating(rating);
-            TextView rating_number = ((TextView)myContentsView.findViewById(R.id.iw_rating_number));
-            rating_number.setText(String.valueOf(rating));
+            schedule.setText(horaapertura.toString() + "h - " + horacierre.toString() + "h");
 
 
             return myContentsView;
