@@ -20,18 +20,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SafeTourBCN"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Valoraciones"></activity>
+        <activity
+            android:name=".Valoraciones"
+            android:label="@string/reserva_button"
+            android:parentActivityName=".MapsActivity">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MapsActivity" />
+        </activity>
         <activity
             android:name=".DrawerActivity"
             android:label="@string/title_activity_drawer"
             android:theme="@style/Theme.SafeTourBCN.NoActionBar"></activity>
 
         <activity
-            android:name=".DrawerActivity"
-            android:label="@string/title_activity_drawer"
-            android:theme="@style/Theme.SafeTourBCN.NoActionBar" ></activity>
-        <activity
             android:name=".PerfilUsuarioActivity"
+            android:label="@string/userProf"
             android:parentActivityName=".MapsActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
@@ -41,6 +46,7 @@
         </activity>
         <activity
             android:name=".EditProfileActivity"
+            android:label="@string/userProf"
             android:parentActivityName=".PerfilUsuarioActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
