@@ -1,8 +1,5 @@
 package com.example.safetourbcn;
 
-import android.app.DownloadManager;
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,6 +19,9 @@ import okhttp3.Response;
 
 public class BackEndRequests {
     private static BackEndRequests ber;
+
+    private String serverAddress = "http://10.4.41.144:3000";
+
     private OkHttpClient client;
     private JSONArray usersList;
     private JSONArray placesList;
@@ -50,8 +50,49 @@ public class BackEndRequests {
     //////////////////////////////////USERS//////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
 
+
+    public void login(String user, String pwd) {
+        String url = serverAddress + "/user/login";
+        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+        JSONObject userJSON = new JSONObject();
+
+        try {
+            userJSON.put("email", user);
+            userJSON.put("password", pwd);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(userJSON.toString(), JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+                errorMsg = "connection";
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if(response.isSuccessful()) {
+                    System.out.println("body: " + response.body().string());
+                }
+            }
+
+        });
+    }
+
+
+
+
+
+
     public void updateUsersList() {
-        String url = "http://10.4.41.144:3000/users";
+        String url = serverAddress + "/users";
 
         Request request = new Request.Builder().url(url).build();
 
@@ -74,7 +115,6 @@ public class BackEndRequests {
                         e.printStackTrace();
                         errorMsg = "connection";
                     }
-
                 }
             }
 
@@ -210,17 +250,20 @@ public class BackEndRequests {
 
     public JSONArray getPlacesListList() { return placesList;}
 
-
-
-
-
-
-
-
-
+    public String getServerAddress() {
+        return serverAddress;
+    }
 
     public String getErrorMsg() {
         return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public OkHttpClient getClient() {
+        return client;
     }
 }
 
