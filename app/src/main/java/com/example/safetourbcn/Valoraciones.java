@@ -12,27 +12,44 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class Valoraciones extends AppCompatActivity {
 
     private String insta = null, web = null;
+    private BackEndRequests backEndRequests;
+    private Session session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_valoraciones);
 
-
+        session = Session.getInstance();
+        backEndRequests = BackEndRequests.getInstance();
 
         final TextView name_establish = findViewById(R.id.nombre_establecimiento);
         name_establish.setText(getIntent().getExtras().getString("establishment"));
 
         PlacesList pl = PlacesList.getInstance();
+        Establishment thisEstablishment = null;
         int b = 0;
         String direccion = null;
         Integer horaapertura = null, horacierre = null;
@@ -45,6 +62,7 @@ public class Valoraciones extends AppCompatActivity {
                 horacierre = place.getHourclose();
                 web = place.getWebsite();
                 insta = place.getInstagram();
+                thisEstablishment = place;
             }
 
         }
@@ -73,6 +91,8 @@ public class Valoraciones extends AppCompatActivity {
                 }
             }
         });
+
+        if(thisEstablishment != null) getSpaceLeft(thisEstablishment.getId());
 
     }
     public void hey() {
@@ -113,5 +133,62 @@ public class Valoraciones extends AppCompatActivity {
             Snackbar mySnack = Snackbar.make(view, "This establishment doesn't have a Website", 2000);
             mySnack.show();
         }
+    }
+
+
+
+
+
+
+    void getSpaceLeft(Integer id) {
+        String url = backEndRequests.getServerAddress()
+                + "/Establishment/"
+                + Integer.toString(id)
+                + "/reserveSpaceLeft";
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("AUTHORIZATION", session.getApiKey())
+                .build();
+
+        backEndRequests.getClient().newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+                backEndRequests.setErrorMsg("connection");
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if(response.isSuccessful()) {
+                    System.out.println("ddddddddddddddx");
+                    String r = response.body().string();
+                    System.out.println("response: " + r);
+
+                    try {
+                        JSONArray ja = new JSONArray(r);
+                        for(int i = 0; i < ja.length(); ++i) {
+                            JSONObject jo = ja.getJSONObject(i);
+                            System.out.println(jo.toString());
+
+                            //////////////////////////////////////
+                            Integer spaceLeft = jo.isNull("Space_Left") ? 0 : jo.getInt("Space_Left");
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        backEndRequests.setErrorMsg("connection");
+                    }
+                }
+
+                else {
+                    String r = response.body().string();
+                    System.out.println("response: " + r);
+                    System.out.println("token " + "Bearer " + session.getApiKey());
+                }
+            }
+
+        });
     }
 }
