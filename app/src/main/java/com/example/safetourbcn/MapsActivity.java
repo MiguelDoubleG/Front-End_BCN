@@ -154,7 +154,10 @@ public class MapsActivity
 
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.welcome);
-        navUsername.setText("Welcome " + session.getInstance().getName());
+        navUsername.setText("Welcome " + session.getName());
+
+        TextView navEmail = (TextView) headerView.findViewById(R.id.drawerEmail);
+        navEmail.setText(session.getEmail());
 
 
         View locationButton = findViewById(R.id.fab);
@@ -167,6 +170,8 @@ public class MapsActivity
 
 
         MenuItem filterButton = findViewById(R.id.action_settings);
+
+        getUserInfo();
     }
 
 
@@ -648,6 +653,11 @@ public class MapsActivity
 
             });
         }
+
+    }
+
+
+    void getUserInfo() {
 
     }
 

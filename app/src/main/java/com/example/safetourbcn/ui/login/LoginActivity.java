@@ -167,11 +167,11 @@ public class LoginActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("email", MODE_PRIVATE);
         String mail = sharedPreferences.getString("email", "nomail");
+
         if(token != "notoken") {
             getUser(mail);
-            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + mail);}
-        else System.out.println("no tokenaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + mail);
+        }
     }
 
     /** Called when the user taps the Send button */
@@ -232,6 +232,7 @@ public class LoginActivity extends AppCompatActivity {
                     sharedPreferences = getSharedPreferences("email", MODE_PRIVATE);
                     sharedPreferences.edit().putString("email", user).commit();
                 }
+                //else showErrorMatch();
             }
 
         });
@@ -265,9 +266,12 @@ public class LoginActivity extends AppCompatActivity {
                                 userInfo.getString("EMAIL"));
                         sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
                         String token = sharedPreferences.getString("token", "notoken");
+
                         session.setApiKey(token);
+                        session.init(userInfo);
 
                         loginActivity();
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                         ber.setErrorMsg("connection");
