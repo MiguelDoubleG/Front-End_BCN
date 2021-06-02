@@ -200,7 +200,7 @@ public class BackEndRequests {
         String url = "http://10.4.41.144:3000/users/password/"+user;
 
         try {
-            newPass.put("username", password);
+            newPass.put("value", password);
         } catch (JSONException e) {
             Log.d("OKHTTP3", "JSON Excepton");
             e.printStackTrace();

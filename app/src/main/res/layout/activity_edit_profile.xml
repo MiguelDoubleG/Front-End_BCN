@@ -37,17 +37,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/correo"
-        android:layout_width="300dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="372dp"
+        android:layout_width="306dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="368dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintHorizontal_bias="0.171"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <EditText
         android:id="@+id/nombre"

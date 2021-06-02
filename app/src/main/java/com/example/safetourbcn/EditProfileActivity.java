@@ -44,7 +44,7 @@ public class EditProfileActivity extends AppCompatActivity {
         if(newPassword.length()>1) {
             if (password.equals(session.getPassword())) {
                 session.editPassword(newPassword);
-                //ber.editUserPass(session.getEmail(), newPassword);
+                ber.editUserPass(session.getEmail(), newPassword);
             } else {
                 Snackbar mySnack = Snackbar.make(view, "Incorrect Password - Password not edited", 2000);
                 mySnack.show();
