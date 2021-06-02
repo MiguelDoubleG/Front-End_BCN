@@ -154,6 +154,41 @@ public class BackEndRequests {
         });
     }
 
+    public void editUserPass(String user, String password) {
+        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+        JSONObject newPass = new JSONObject();
+        String url = "http://10.4.41.144:3000/users/password/"+user;
+
+        try {
+            newPass.put("username", password);
+        } catch (JSONException e) {
+            Log.d("OKHTTP3", "JSON Excepton");
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(newPass.toString(), JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .put(body).
+                        build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+                errorMsg = "connection";
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if(response.isSuccessful()) {
+                    String TAG = "aa";
+                    Log.d(TAG,response.message());
+                }
+            }
+        });
+    }
+
     public JSONObject getUserInfo(String email) throws JSONException {
         for(int i = 0; i < usersList.length(); ++i) {
             JSONObject us = usersList.getJSONObject(i);

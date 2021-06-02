@@ -30,7 +30,13 @@ public class Session {
         currentUser.setNombre(name);
     }
 
+    public void editPassword(String newPassword) {
+        currentUser.setPassword(newPassword);
+    }
+
     public String getName() { return currentUser.getNombre();}
 
     public String getEmail() { return currentUser.getEmail();}
+
+    public String getPassword() { return currentUser.getPassword();}
 }

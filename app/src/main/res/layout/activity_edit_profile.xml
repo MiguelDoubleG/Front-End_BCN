@@ -16,33 +16,35 @@
 
 
     ]]>
-
     <TextView
-        android:id="@+id/perfil"
-        android:layout_width="150dp"
-        android:layout_height="49dp"
-        android:layout_marginBottom="100dp"
-        android:fontFamily="sans-serif-black"
-        android:lineSpacingExtra="36sp"
-        android:text="@string/perfil"
-        android:textColor="#026DC3"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/email_perfil"
+        android:id="@+id/background"
+        android:layout_width="0dp"
+        android:layout_height="320dp"
+        android:background="@drawable/grad"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/email_perfil"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="216dp"
-        android:layout_marginEnd="347dp"
+        android:layout_marginTop="340dp"
         android:text="@string/email"
+        android:textColor="@color/gradStart"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/correo"
+        android:layout_width="300dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="372dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.144"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,64 +54,93 @@
         android:layout_width="380dp"
         android:layout_height="60dp"
         android:layout_marginStart="13dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="18dp"
+        android:layout_marginEnd="13dp"
         android:layout_marginBottom="24dp"
         android:autofillHints="@string/name"
         android:hint="@string/name"
         android:inputType="text"
         android:textAlignment="center"
-        android:textColor="#00163A"
+        android:textColor="@color/white"
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/correo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/perfil" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.111" />
 
-    <TextView
-        android:id="@+id/correo"
-        android:layout_width="300dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="82dp"
-        android:layout_marginTop="216dp"
-        android:layout_marginEnd="29dp"
-        android:textSize="18sp"
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="60dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/circle"
+        android:contentDescription="@string/userProf"
+        android:scaleType="centerInside"
+        android:src="@drawable/example"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
-        android:layout_marginBottom="420dp"
+        android:layout_marginTop="168dp"
         android:onClick="save"
         android:text="@string/save"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.91"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/correo" />
 
-    <!--
-    <Button
-        android:id="@+id/back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="296dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="22dp"
-        android:backgroundTint="#026DC3"
-        android:text="@string/volver"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+    <TextView
+        android:id="@+id/password_perfil"
+        android:layout_width="174dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="408dp"
+        android:text="@string/editPassword"
+        android:textColor="@color/gradStart"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.077" />
-        -->
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="300dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="440dp"
+        android:inputType="textPassword"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/edit_password_perfil"
+        android:layout_width="208dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="472dp"
+        android:text="@string/editPassword2"
+        android:textColor="@color/gradStart"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/new_password"
+        android:layout_width="300dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="504dp"
+        android:inputType="textPassword"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
