@@ -67,6 +67,11 @@
     <!-- InfoWindow -->
     <string name="reserva_button">Access establishment</string>
 
+    <!-- Establishment -->
+    <string name="texto">Do you want to reserve? Choose a date and a group</string>
+    <string name="button_reservar">Reserve</string>
+    <string name="text_personas">How many people?</string>
+
     <string-array name="filter_menu_array">
         <item>All</item>
         <item>Bar</item>

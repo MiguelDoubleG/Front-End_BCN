@@ -68,7 +68,11 @@
 
     <!-- InfoWindow -->
     <string name="reserva_button">Reserva ya</string>
-    <string name="valoraciones_button">Ver valoraciones</string>
+
+    <!-- Establishment -->
+    <string name="texto">¿Quieres reservar tu visita? Escoge un día y un horario</string>
+    <string name="button_reservar">Reservar</string>
+    <string name="text_personas">¿Cúantas personas?</string>
 
     <string-array name="filter_menu_array">
         <item>Todas</item>
