@@ -13,10 +13,13 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Rating;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,8 +34,10 @@ import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.safetourbcn.ui.login.LoginActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -50,16 +55,28 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MapsActivity
         extends AppCompatActivity
-        implements GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback {
+        implements GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap map;
     private final BackEndRequests ber = BackEndRequests.getInstance();
     private AppBarConfiguration mAppBarConfiguration;
-    private Session session;
+    private Session session = Session.getInstance();
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location currentLocation;
     private LocationManager locationManager;
@@ -131,7 +148,7 @@ public class MapsActivity
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -141,7 +158,10 @@ public class MapsActivity
 
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.welcome);
-        navUsername.setText("Welcome " + session.getInstance().getName());
+        navUsername.setText("Welcome " + session.getName());
+
+        TextView navEmail = (TextView) headerView.findViewById(R.id.drawerEmail);
+        navEmail.setText(session.getEmail());
 
 
         View locationButton = findViewById(R.id.fab);
@@ -154,6 +174,8 @@ public class MapsActivity
 
 
         MenuItem filterButton = findViewById(R.id.action_settings);
+
+        getUserInfo();
     }
 
 
@@ -177,6 +199,7 @@ public class MapsActivity
 
         map.setOnMyLocationButtonClickListener(this);
         map.setOnMyLocationClickListener(this);
+        map.setOnInfoWindowClickListener(this);
 
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -218,13 +241,13 @@ public class MapsActivity
             boolean bCategory = category == null || (place.getCategory() != null && category.equals(place.getCategory()));
             boolean bDistance = distance == null || (place.getLat() != null && place.getLng() != null && distance >= calcDistance(place));
             boolean bPrice = price == null || (place.getPrice() != null && price.equals(place.getPrice()));
-            boolean bRating = rating == null || (place.getRating() != null && rating <= place.getRating());
             boolean bDiscount = discount == null || (place.getDiscount() != null && discount == place.getDiscount());
 
-            if (bCategory && bDiscount && bDistance && bPrice && bRating)
+            if (bCategory && bDiscount && bDistance && bPrice)
                 map.addMarker(new MarkerOptions()
                         .position(new LatLng(place.getLat(), place.getLng()))
-                        .title(place.getName()));
+                        .title(place.getName()))
+                        .setSnippet(Integer.toString(place.getId()));
         }
     }
 
@@ -342,9 +365,18 @@ public class MapsActivity
     }
 
 
+
     public void logout(View view) {
         // Do something in response to button
-        Intent intent = new Intent(this, SignUpActivity.class);
+        SharedPreferences sharedPreferences;
+
+        sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
+        sharedPreferences.edit().clear().commit();
+
+        sharedPreferences = getSharedPreferences("email", MODE_PRIVATE);
+        sharedPreferences.edit().clear().commit();
+
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
@@ -386,14 +418,13 @@ public class MapsActivity
             }
         });
     }
-    void searchEstablishments(String name, Integer distance){
+    void searchEstablishments(String name){
         PlacesList pl = PlacesList.getInstance();
         map.clear();
         for (int i = 0; i < pl.getLength(); ++i) {
             Establishment place = pl.getEstablishment(i);
             boolean bSearch = name == null || place.getName().toLowerCase().startsWith(name.toLowerCase());
-            boolean bDistance = distance == null || distance >= calcDistance(place);
-            if (bSearch && bDistance)
+            if (bSearch)
                 map.addMarker(new MarkerOptions()
                         .position(new LatLng(place.getLat(), place.getLng()))
                         .title(place.getName()));
@@ -406,13 +437,6 @@ public class MapsActivity
         View viewSearch = inflater.inflate(R.layout.search, null);
         builder.setView(viewSearch);
         dialog = builder.create();
-        viewSearch.findViewById(R.id.reset_search_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView tvDistance = (TextView) viewSearch.findViewById(R.id.textNumberDistance);
-                tvDistance.setText("0");
-            }
-        });
         viewSearch.findViewById(R.id.cancel_search_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -422,20 +446,13 @@ public class MapsActivity
         viewSearch.findViewById(R.id.ok_search_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer distance = null;
                 String search = null;
                 TextView tvSearch = (TextView) viewSearch.findViewById((R.id.textSearch));
-                TextView tvDistance = (TextView) viewSearch.findViewById(R.id.textNumberDistance);
                 String sSearch = tvSearch.getText().toString();
-                String sDistance = tvDistance.getText().toString();
                 if(!sSearch.equals("")) {
                     search = sSearch;
                 }
-                if(!sDistance.equals("")) {
-                    distance = Integer.parseInt(sDistance) * 1000;
-                }
-
-                searchEstablishments(search,distance);
+                searchEstablishments(search);
                 dialog.dismiss();
             }
         });
@@ -523,6 +540,13 @@ public class MapsActivity
     //INFOWINDOW
     //////////////
 
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Intent intent = new Intent(this, Valoraciones.class);
+        intent.putExtra("establishment", marker.getTitle());
+        startActivity(intent);
+    }
+
     class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         private final View myContentsView;
@@ -536,15 +560,17 @@ public class MapsActivity
             PlacesList pl = PlacesList.getInstance();
             int b = 0;
             String direccion = null;
-            String horario = null;
-            float rating = 0;
+            Integer horaapertura = null, horacierre = null;
+            Integer idEstablecimiento = null;
             for (int i = 0; i < pl.getLength() && b == 0; ++i) {
                 Establishment place = pl.getEstablishment(i);
                 if(place.getName().equals(marker.getTitle())){
                     b = 1;
+                    idEstablecimiento = i;
                     direccion = place.getAddress();
-                    horario = place.getSchedule();
-                    rating = place.getRating();
+                    horaapertura = place.getHouropen();
+                    horacierre = place.getHourclose();
+                    getAvgRating(place.getId());
                 }
 
             }
@@ -554,11 +580,13 @@ public class MapsActivity
             TextView adress = ((TextView)myContentsView.findViewById(R.id.iw_adress));
             adress.setText(direccion);
             TextView schedule = ((TextView)myContentsView.findViewById(R.id.iw_horari));
-            schedule.setText(horario);
-            RatingBar rating_stars = ((RatingBar)myContentsView.findViewById(R.id.iw_rating));
-            rating_stars.setRating(rating);
-            TextView rating_number = ((TextView)myContentsView.findViewById(R.id.iw_rating_number));
-            rating_number.setText(String.valueOf(rating));
+            schedule.setText(horaapertura.toString() + "h - " + horacierre.toString() + "h");
+            TextView rating = (TextView) myContentsView.findViewById(R.id.iw_rating_number);
+            //rating.setText(getAvgRating(idEstablecimiento).toString());
+            RatingBar ratingBar = (RatingBar) myContentsView.findViewById(R.id.iw_rating);
+            //ratingBar.setRating(getAvgRating(idEstablecimiento));
+
+
 
             return myContentsView;
         }
@@ -568,6 +596,64 @@ public class MapsActivity
             // TODO Auto-generated method stub
             return null;
         }
+
+
+
+
+
+
+        void getAvgRating(Integer i) {
+            String url = ber.getServerAddress() + "/Establishment/" + Integer.toString(i) + "/AverageRating";
+            Request request = new Request.Builder()
+                    .url(url)
+                    .addHeader("AUTHORIZATION", session.getApiKey())
+                    .build();
+
+            ber.getClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    e.printStackTrace();
+                    ber.setErrorMsg("connection");
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    if(response.isSuccessful()) {
+                        System.out.println("ddddddddddddddx");
+                        String r = response.body().string();
+                        System.out.println("response: " + r);
+
+                        try {
+                            JSONArray ja = new JSONArray(r);
+                            for(int i = 0; i < ja.length(); ++i) {
+                                JSONObject jo = ja.getJSONObject(i);
+                                System.out.println(jo.toString());
+                                double rating = jo.isNull("AVG(VALUE)") ? 0.0 : jo.getDouble("AVG(VALUE)");
+                                RatingBar ratingBar = (RatingBar) myContentsView.findViewById(R.id.iw_rating);
+                                ratingBar.setRating((float) rating);
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            ber.setErrorMsg("connection");
+                        }
+                    }
+
+                    else {
+                        String r = response.body().string();
+                        System.out.println("response: " + r);
+                        System.out.println("token " + "Bearer " + session.getApiKey());
+                    }
+                }
+
+            });
+        }
+
+    }
+
+
+    void getUserInfo() {
 
     }
 

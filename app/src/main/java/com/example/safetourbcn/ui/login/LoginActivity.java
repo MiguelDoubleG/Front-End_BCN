@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -62,14 +63,17 @@ import okhttp3.Response;
 public class LoginActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.SafeTourBCN.MESSAGE";
     private LoginViewModel loginViewModel;
+    private Session session;
     BackEndRequests ber = BackEndRequests.getInstance();
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN = 0;
+    SharedPreferences sharedPreferences;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        session = Session.getInstance();
         setContentView(R.layout.activity_login);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -145,28 +149,29 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                //loginViewModel.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
+                String token = sharedPreferences.getString("token", "notoken");
 
-                //EditText usernameEditText = findViewById(R.id.usernameLogIn);
-                //EditText passwordEditText = findViewById(R.id.passwordLogIn);
-                try {
-                    if(matchUser(usernameEditText.getText().toString(), passwordEditText.getText().toString())) {
-                        loginViewModel.loginSucces(usernameEditText.getText().toString());
-                        logIn();
-                    }
-
-                    else {
-                        if(ber.getErrorMsg().equals("")) showErrorMatch();
-                        else if (ber.getErrorMsg().equals("connection")) showErrorConnection();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if(token == "notoken")
+                    login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                else {
+                    //loginActivity();
+                    getUser(usernameEditText.getText().toString());
+                    Log.d("aa", token);
                 }
+
             }
         });
+        sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "notoken");
 
+        sharedPreferences = getSharedPreferences("email", MODE_PRIVATE);
+        String mail = sharedPreferences.getString("email", "nomail");
 
-
+        if(token != "notoken") {
+            getUser(mail);
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + mail);
+        }
     }
 
     /** Called when the user taps the Send button */
@@ -178,9 +183,109 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+    public void login(String user, String pwd) {
+        String url = ber.getServerAddress() + "/user/login";
+        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+        JSONObject userJSON = new JSONObject();
+
+        try {
+            userJSON.put("email", user);
+            userJSON.put("password", pwd);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(userJSON.toString(), JSON);
+
+        Request request;
+
+        if(session.getApiKey() == null) {
+            request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
+        }
+
+        else {
+            request = new Request.Builder()
+                    .url(url)
+                    .addHeader("AUTHORIZATION", session.getApiKey())
+                    .post(body)
+                    .build();
+        }
+
+        ber.getClient().newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+                ber.setErrorMsg("connection");
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if(response.isSuccessful()) {
+                    String bodyString = response.body().string();
+                    if(bodyString != null) session.setApiKey(bodyString);
+                    sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
+                    sharedPreferences.edit().putString("token", bodyString).commit();
+
+                    sharedPreferences = getSharedPreferences("email", MODE_PRIVATE);
+                    sharedPreferences.edit().putString("email", user).commit();
+
+                    getUser(user);
+                }
+                //else showErrorMatch();
+            }
+
+        });
+    }
+
+    public void getUser(String email) {
+        String url = ber.getServerAddress() + "/users/" + email;
+        Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+        ber.getClient().newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+                ber.setErrorMsg("connection");
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if(response.isSuccessful()) {
+                    String r = response.body().string();
+
+                    try {
+                        JSONArray ja = new JSONArray(r);
+                        JSONObject userInfo = ja.getJSONObject(0);
+                        ber.setErrorMsg("");
+                        session.init(
+                                userInfo.getString("NAME"),
+                                userInfo.getString("PASSWORD"),
+                                userInfo.getString("EMAIL"));
+                        sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
+                        String token = sharedPreferences.getString("token", "notoken");
+
+                        session.setApiKey(token);
+                        session.init(userInfo);
+
+                        loginActivity();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        ber.setErrorMsg("connection");
+                    }
+                }
+            }
+
+        });
+    }
 
 
-    public void logIn() {
+    public void loginActivity() {
         // Do something in response to button
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
@@ -220,9 +325,8 @@ public class LoginActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
             // Signed in successfully, show authenticated UI.
-            logIn();
+            loginActivity();
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -257,8 +361,7 @@ public class LoginActivity extends AppCompatActivity {
             if(user.equals(userLogin) && pwd.equals(pwdLogin)) {
                 System.out.println("It's a match!");
                 //Iniciar session
-                Session currentSession = Session.getInstance();
-                currentSession.init(us);
+                session.init(us);
                 return true;
             }
 

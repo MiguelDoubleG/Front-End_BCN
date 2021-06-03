@@ -66,16 +66,25 @@
     <string name="ratings">Ratings</string>
 
     <!-- Edit Profile -->
+    <string name="userProf">Perfil de Usuario</string>
+    <string name="password">Contraseña:</string>
+    <string name="editPassword">Introduce tu contraseña para editarla</string>
+    <string name="editPassword2">Introduce tu contraseña nueva</string>
     <string name="editProf">EDITAR</string>
     <string name="save">Save</string>
 
     <!-- InfoWindow -->
     <string name="reserva_button">Reserva ya</string>
-    <string name="valoraciones_button">Ver valoraciones</string>
+
+    <!-- Establishment -->
+    <string name="text">¿Quieres reservar tu visita? Escoge un día y un grupo</string>
+    <string name="text2">¿Cuántas plazas?</string>
+    <string name="button">Reservar ya</string>
 
     <string-array name="filter_menu_array">
         <item>Todas</item>
         <item>Bar</item>
         <item>Restaurante</item>
     </string-array>
+    <string name="bookings">Reservas</string>
 </resources>

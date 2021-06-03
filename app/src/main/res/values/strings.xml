@@ -28,8 +28,6 @@
     <string name="not_match">User or password are incorrect</string>
 
 
-
-
     <!--    -->
     <string name="title_activity_drawer">DrawerActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -47,7 +45,6 @@
     <string name="menu_logout">Logout</string>
 
 
-
     <!-- Filter Menu -->
     <string name="filters">Filters</string>
     <string name="ok">Accept</string>
@@ -62,18 +59,30 @@
     <!-- Search -->
     <string name="search">Search</string>
 
-    <!-- Edit Profile -->
+    <!-- Valoraciones -->
+    <string name="ratings">Ratings</string>
+
+    <!-- Profile -->
+    <string name="userProf">User Profile</string>
+    <string name="password">Password:</string>
+    <string name="editPassword">Enter your password</string>
+    <string name="editPassword2">Enter your new password</string>
     <string name="editProf">EDIT</string>
     <string name="save">Save</string>
 
 
     <!-- InfoWindow -->
-    <string name="reserva_button">Reserve now</string>
-    <string name="valoraciones_button">ratings</string>
+    <string name="reserva_button">Access establishment</string>
+
+    <!-- Establishment -->
+    <string name="text">Do you want to reserve? Choose a date and a group</string>
+    <string name="text2">How many people?</string>
+    <string name="button">Reserve now</string>
 
     <string-array name="filter_menu_array">
         <item>All</item>
         <item>Bar</item>
         <item>Restaurant</item>
     </string-array>
+    <string name="bookings">Bookings</string>
 </resources>

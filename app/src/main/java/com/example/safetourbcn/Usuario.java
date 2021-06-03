@@ -1,4 +1,4 @@
-package com.example.safetourbcn;
+ package com.example.safetourbcn;
 
 public class Usuario {
     private String nombre;
@@ -6,6 +6,9 @@ public class Usuario {
     private String email;
 
     public Usuario(){
+        nombre = "";
+        password = "";
+        email = "";
     }
 
     public Usuario(String nom, String pass, String mail){

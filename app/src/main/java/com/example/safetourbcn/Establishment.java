@@ -8,18 +8,20 @@ public class Establishment {
     private Double lat;
     private Double lng;
     private Integer maxCapacity;
-    private String schedule;
+    private Integer houropen;
+    private Integer hourclose;
     private String category;
     private Integer price;
-    private Float  rating;
     private Boolean discount;
     private String address;
+    private String website;
+    private String instagram;
 
     public Establishment(){ }
 
     public Establishment(int id, String name, String idCompany, String description,
-                         Double lat, Double lng, Integer maxCapacity, String schedule,
-                         String category, Integer price, Float  rating, Boolean discount, String address){
+                         Double lat, Double lng, Integer maxCapacity, Integer houropen, Integer hourclose,
+                         String category, Integer price, Boolean discount, String address, String website, String instagram){
         this.id = id;
         this.idCompany = idCompany;
         this.name = name;
@@ -27,12 +29,14 @@ public class Establishment {
         this. lat = lat;
         this.lng = lng;
         this.maxCapacity = maxCapacity;
-        this.schedule = schedule;
+        this.houropen = houropen;
+        this.hourclose = hourclose;
         this.category = category;
         this.price = price;
-        this.rating = rating;
         this.discount = discount;
         this.address = address;
+        this.website = website;
+        this.instagram = instagram;
     }
 
     public String getName() { return name; }
@@ -47,10 +51,6 @@ public class Establishment {
 
     public int getId() {
         return id;
-    }
-
-    public String getSchedule() {
-        return schedule;
     }
 
     public Double getLat() { return lat; }
@@ -69,17 +69,19 @@ public class Establishment {
         return price;
     }
 
-    public Float getRating() {
-        return rating;
-    }
-
     public Boolean getDiscount() {
         return discount;
     }
 
     public String getAddress() { return address; }
 
+    public Integer getHouropen() { return houropen;}
 
+    public Integer getHourclose() { return hourclose; }
+
+    public String getInstagram() { return instagram; }
+
+    public String getWebsite() { return website; }
 
     public void setDescription(String description) {
         this.description = description;
@@ -88,8 +90,6 @@ public class Establishment {
     public void setId(int id) { this.id = id; }
 
     public void setMaxCapacity(int maxCapacity) { this.maxCapacity = maxCapacity; }
-
-    public void setSchedule(String schedule) {  this.schedule = schedule; }
 
     public void setLat(double lat) { this.lat = lat; }
 
