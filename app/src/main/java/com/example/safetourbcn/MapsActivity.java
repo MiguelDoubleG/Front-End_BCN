@@ -477,7 +477,7 @@ public class MapsActivity
             @Override
             public void onClick(View v) {
                 TextView tvDistance = (TextView) viewFilterMenu.findViewById(R.id.textNumberDistance);
-                tvDistance.setText("20");
+                tvDistance.setText("");
             }
         });
 
