@@ -38,6 +38,8 @@ public class Valoraciones extends AppCompatActivity {
     private String insta = null, web = null;
     private BackEndRequests backEndRequests;
     private Session session;
+    private Integer idEstablecimiento = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +57,11 @@ public class Valoraciones extends AppCompatActivity {
         int b = 0;
         String direccion = null;
         Integer horaapertura = null, horacierre = null;
-        Integer idEstablecimiento = null;
         for (int i = 0; i < pl.getLength() && b == 0; ++i) {
             Establishment place = pl.getEstablishment(i);
             if(place.getName().equals(name_establish.getText())){
                 b = 1;
-                idEstablecimiento = i;
+                idEstablecimiento = place.getId();
                 direccion = place.getAddress();
                 horaapertura = place.getHouropen();
                 horacierre = place.getHourclose();
@@ -94,17 +95,17 @@ public class Valoraciones extends AppCompatActivity {
                 }
                 else{
                     //if(Integer.parseInt(texto)<=getSpaceLeft(finalIdEstablecimiento)){
-                        if(0==0){
-                            String horareserva = "";
-                            for(int i = 0; i < texto.length(); ++i){
-                                if(Character.compare(texto.charAt(i), 'h') != 0){
-                                    horareserva += texto.charAt(i);
-                                }
+                    if(0==0){
+                        String horareserva = "";
+                        for(int i = 0; i < texto.length(); ++i){
+                            if(Character.compare(texto.charAt(i), 'h') != 0){
+                                horareserva += texto.charAt(i);
                             }
-                            Integer horaReserva = Integer.parseInt(horareserva);
-                            //backEndRequests.guardaReserva(finalIdEstablecimiento1, session.getEmail(), Integer.parseInt(texto), calendario.getDate(), horaReserva);
-                            Snackbar mySnack = Snackbar.make(v, Long.toString(calendario.getDate()), 2000);
-                            mySnack.show();
+                        }
+                        Integer horaReserva = Integer.parseInt(horareserva);
+                        //backEndRequests.guardaReserva(finalIdEstablecimiento1, session.getEmail(), Integer.parseInt(texto), calendario.getDate(), horaReserva);
+                        Snackbar mySnack = Snackbar.make(v, Long.toString(calendario.getDate()), 2000);
+                        mySnack.show();
                     }
                     else{
                         Snackbar mySnack = Snackbar.make(v, "There are only 4 places left", 2000);
@@ -151,6 +152,11 @@ public class Valoraciones extends AppCompatActivity {
             Snackbar mySnack = Snackbar.make(view, "This establishment doesn't have a Website", 2000);
             mySnack.show();
         }
+    }
+    public void gotoRatings(View view){
+        Intent intent = new Intent(this, Ratings.class);
+        intent.putExtra("ESTABLISHMENT_ID", idEstablecimiento.toString());
+        startActivity(intent);
     }
 
 
