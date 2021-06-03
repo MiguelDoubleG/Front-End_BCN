@@ -1,7 +1,6 @@
 package com.example.safetourbcn;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +10,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -22,34 +20,36 @@ import okhttp3.Response;
 public class Ratings extends AppCompatActivity {
     Session session = Session.getInstance();
     BackEndRequests ber = BackEndRequests.getInstance();
-    JSONArray ja = ber.getUsersList();
     int N = 0;
     String[] authors;
     String[] descriptions;
     int[] values;
     ListView simpleList;
-    CustomAdapter customAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ratings);
-        simpleList = (ListView) findViewById(R.id.simpleListView);
         getRatings();
-
-        int stars[] = {R.drawable.onestar, R.drawable.twostar, R.drawable.threestar, R.drawable.fourstar, R.drawable.fivestar};
-
-        //take the value of the ratings and translate it into images
-        for(int i=0 ;i<N;++i)
-        {
-            if(values[i] == 1) values[i] = stars[1-1];
-            else if(values[i] == 2) values[i] = stars[2-1];
-            else if(values[i] == 3) values[i] = stars[3-1];
-            else if(values[i] == 4) values[i] = stars[4-1];
-            else if(values[i] == 5) values[i] = stars[5-1];
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+        int stars[] = {R.drawable.onestar, R.drawable.twostar, R.drawable.threestar, R.drawable.fourstar, R.drawable.fivestar};
+        //take the value of the ratings and translate it into images
+        for (int i = 0; i < N; ++i) {
+            if (values[i] == 1) values[i] = stars[0];
+            else if (values[i] == 2) values[i] = stars[1];
+            else if (values[i] == 3) values[i] = stars[2];
+            else if (values[i] == 4) values[i] = stars[3];
+            else if (values[i] == 5) values[i] = stars[4];
+        }
+        simpleList = (ListView) findViewById(R.id.simpleListView);
+        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), descriptions, values, authors);
         simpleList.setAdapter(customAdapter);
-    }
+        }
 
     public void getRatings() {
         String id = getIntent().getStringExtra("ESTABLISHMENT_ID");
@@ -82,15 +82,6 @@ public class Ratings extends AppCompatActivity {
                         for(int i = 0; i < N; ++i) {
                             JSONObject jo = ja.getJSONObject(i);
                             addItem(jo, i);
-                        }
-                        System.out.println(descriptions[0]);
-                        System.out.println(descriptions[1]);
-                        try {
-                            Thread.sleep(5000);
-                            customAdapter = new CustomAdapter(getApplicationContext(), descriptions, values,authors);
-                        } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
                         }
 
                     } catch (JSONException e) {
