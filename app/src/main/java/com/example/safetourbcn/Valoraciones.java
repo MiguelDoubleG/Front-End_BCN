@@ -53,10 +53,12 @@ public class Valoraciones extends AppCompatActivity {
         int b = 0;
         String direccion = null;
         Integer horaapertura = null, horacierre = null;
+        Integer idEstablecimiento = null;
         for (int i = 0; i < pl.getLength() && b == 0; ++i) {
             Establishment place = pl.getEstablishment(i);
             if(place.getName().equals(name_establish.getText())){
                 b = 1;
+                idEstablecimiento = i;
                 direccion = place.getAddress();
                 horaapertura = place.getHouropen();
                 horacierre = place.getHourclose();
@@ -80,6 +82,8 @@ public class Valoraciones extends AppCompatActivity {
         final CalendarView calendario= findViewById(R.id.calendar);
         final EditText number = findViewById(R.id.number);
         final Button button = findViewById(R.id.button_reservar);
+        Integer finalIdEstablecimiento = idEstablecimiento;
+        Integer finalIdEstablecimiento1 = idEstablecimiento;
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String texto = spinner.getSelectedItem().toString();
@@ -87,17 +91,29 @@ public class Valoraciones extends AppCompatActivity {
                     specify_number();
                 }
                 else{
-
+                    //if(Integer.parseInt(texto)<=getSpaceLeft(finalIdEstablecimiento)){
+                        if(0==0){
+                            String horareserva = "";
+                            for(int i = 0; i < texto.length(); ++i){
+                                if(Character.compare(texto.charAt(i), 'h') != 0){
+                                    horareserva += texto.charAt(i);
+                                }
+                            }
+                            Integer horaReserva = Integer.parseInt(horareserva);
+                            //backEndRequests.guardaReserva(finalIdEstablecimiento1, session.getEmail(), Integer.parseInt(texto), calendario.getDate(), horaReserva);
+                            Snackbar mySnack = Snackbar.make(v, Long.toString(calendario.getDate()), 2000);
+                            mySnack.show();
+                    }
+                    else{
+                        Snackbar mySnack = Snackbar.make(v, "There are only 4 places left", 2000);
+                        mySnack.show();
+                    }
                 }
             }
         });
 
         if(thisEstablishment != null) getSpaceLeft(thisEstablishment.getId());
 
-    }
-    public void hey() {
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
     }
 
     public void specify_number(){

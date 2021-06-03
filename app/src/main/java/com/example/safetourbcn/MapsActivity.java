@@ -19,6 +19,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Rating;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -557,10 +558,12 @@ public class MapsActivity
             int b = 0;
             String direccion = null;
             Integer horaapertura = null, horacierre = null;
+            Integer idEstablecimiento = null;
             for (int i = 0; i < pl.getLength() && b == 0; ++i) {
                 Establishment place = pl.getEstablishment(i);
                 if(place.getName().equals(marker.getTitle())){
                     b = 1;
+                    idEstablecimiento = i;
                     direccion = place.getAddress();
                     horaapertura = place.getHouropen();
                     horacierre = place.getHourclose();
@@ -575,6 +578,11 @@ public class MapsActivity
             adress.setText(direccion);
             TextView schedule = ((TextView)myContentsView.findViewById(R.id.iw_horari));
             schedule.setText(horaapertura.toString() + "h - " + horacierre.toString() + "h");
+            TextView rating = (TextView) myContentsView.findViewById(R.id.iw_rating_number);
+            //rating.setText(getAvgRating(idEstablecimiento).toString());
+            RatingBar ratingBar = (RatingBar) myContentsView.findViewById(R.id.iw_rating);
+            //ratingBar.setRating(getAvgRating(idEstablecimiento));
+
 
 
             return myContentsView;
