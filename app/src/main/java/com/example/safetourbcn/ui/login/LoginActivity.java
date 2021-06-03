@@ -219,6 +219,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 e.printStackTrace();
                 ber.setErrorMsg("connection");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showErrorConnection();
+                    }
+                });
             }
 
             @Override
@@ -234,7 +240,14 @@ public class LoginActivity extends AppCompatActivity {
 
                     getUser(user);
                 }
-                //else showErrorMatch();
+                else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showErrorMatch();
+                        }
+                    });
+                }
             }
 
         });
@@ -251,6 +264,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 e.printStackTrace();
                 ber.setErrorMsg("connection");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showErrorConnection();
+                    }
+                });
+
             }
 
             @Override
@@ -397,6 +417,8 @@ public class LoginActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO: volver a llamar al server (o no)
+                        finish();
+                        startActivity(getIntent());
                     }
                 })
                 .show();

@@ -83,6 +83,9 @@ public class BookingsActivity extends AppCompatActivity {
 
                     try {
                         JSONArray ja = new JSONArray(r);
+                        if(ja.length() == 0) {
+
+                        }
                         for(int i = 0; i < ja.length(); ++i) {
                             JSONObject jo = ja.getJSONObject(i);
                             bookingList.add(jo);
