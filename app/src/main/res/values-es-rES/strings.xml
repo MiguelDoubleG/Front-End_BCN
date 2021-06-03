@@ -62,6 +62,9 @@
     <!-- Search -->
     <string name="search">Buscar</string>
 
+    <!-- Valoraciones -->
+    <string name="ratings">Ratings</string>
+
     <!-- Edit Profile -->
     <string name="editProf">EDITAR</string>
     <string name="save">Save</string>

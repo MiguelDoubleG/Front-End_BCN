@@ -83,6 +83,7 @@ public class MapsActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ber.updatePlacesList();
+        ber.updateUsersList();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.

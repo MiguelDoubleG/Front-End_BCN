@@ -20,11 +20,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SafeTourBCN"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Listview"></activity>
+        <activity android:name=".Ratings" />
+        <activity
+            android:name=".Valoraciones"
+            android:label="@string/reserva_button"
+            android:parentActivityName=".MapsActivity">
 
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MapsActivity" />
+        </activity>
         <activity
             android:name=".DrawerActivity"
             android:label="@string/title_activity_drawer"
-            android:theme="@style/Theme.SafeTourBCN.NoActionBar" ></activity>
+            android:theme="@style/Theme.SafeTourBCN.NoActionBar" />
         <activity
             android:name=".PerfilUsuarioActivity"
             android:parentActivityName=".MapsActivity">
@@ -42,6 +53,16 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".PerfilUsuarioActivity" />
+        </activity>
+        <activity
+            android:name=".BookingsActivity"
+            android:label="@string/bookings"
+            android:parentActivityName=".MapsActivity">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MapsActivity" />
         </activity>
         <activity
             android:name=".SignUpActivity"
@@ -76,8 +97,7 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
-            android:theme="@style/Theme.SafeTourBCN.NoActionBar" >
-        </activity>
+            android:theme="@style/Theme.SafeTourBCN.NoActionBar" />
     </application>
 
 </manifest>
