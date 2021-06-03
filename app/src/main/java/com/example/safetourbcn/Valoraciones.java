@@ -28,7 +28,9 @@ import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Valoraciones extends AppCompatActivity {
@@ -207,4 +209,63 @@ public class Valoraciones extends AppCompatActivity {
 
         });
     }
+
+
+
+
+    void getSpaceLeft(Integer id, String data, String time) throws JSONException {
+        String url = backEndRequests.getServerAddress()
+                + "/Establishment/"
+                + Integer.toString(id)
+                + "/reserveSpaceLeft"
+                + "?reservation_date=" + data
+                + "&reservation_hour=" + time;
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("AUTHORIZATION", session.getApiKey())
+                .build();
+
+        backEndRequests.getClient().newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+                backEndRequests.setErrorMsg("connection");
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if(response.isSuccessful()) {
+                    System.out.println("ddddddddddddddx");
+                    String r = response.body().string();
+                    System.out.println("response: " + r);
+
+                    try {
+                        JSONArray ja = new JSONArray(r);
+                        for(int i = 0; i < ja.length(); ++i) {
+                            JSONObject jo = ja.getJSONObject(i);
+                            System.out.println(jo.toString());
+
+                            //////////////////////////////////////
+                            Integer spaceLeft = jo.isNull("Space_Left") ? 0 : jo.getInt("Space_Left");
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        backEndRequests.setErrorMsg("connection");
+                    }
+                }
+
+                else {
+                    String r = response.body().string();
+                    System.out.println("response: " + r);
+                    System.out.println("token " + "Bearer " + session.getApiKey());
+                }
+            }
+
+        });
+    }
+
+
 }
