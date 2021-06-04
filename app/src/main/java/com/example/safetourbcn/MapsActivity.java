@@ -81,6 +81,7 @@ public class MapsActivity
     private Location currentLocation;
     private LocationManager locationManager;
     private AlertDialog dialog;
+    private float rate= 4;
 
 
     /**
@@ -566,14 +567,15 @@ public class MapsActivity
                 Establishment place = pl.getEstablishment(i);
                 if(place.getName().equals(marker.getTitle())){
                     b = 1;
-                    idEstablecimiento = i;
+                    idEstablecimiento = place.getId();
                     direccion = place.getAddress();
                     horaapertura = place.getHouropen();
                     horacierre = place.getHourclose();
-                    getAvgRating(place.getId());
+                    getAvgRating(idEstablecimiento);
                 }
 
             }
+
 
             TextView tvTitle = (TextView)myContentsView.findViewById(R.id.iw_name);
             tvTitle.setText(marker.getTitle());
@@ -582,9 +584,10 @@ public class MapsActivity
             TextView schedule = ((TextView)myContentsView.findViewById(R.id.iw_horari));
             schedule.setText(horaapertura.toString() + "h - " + horacierre.toString() + "h");
             TextView rating = (TextView) myContentsView.findViewById(R.id.iw_rating_number);
-            //rating.setText(getAvgRating(idEstablecimiento).toString());
+            rating.setText(Float.toString(rate));
             RatingBar ratingBar = (RatingBar) myContentsView.findViewById(R.id.iw_rating);
-            //ratingBar.setRating(getAvgRating(idEstablecimiento));
+            ratingBar.setRating(rate);
+            System.out.print(rate);
 
 
 
@@ -629,8 +632,9 @@ public class MapsActivity
                                 JSONObject jo = ja.getJSONObject(i);
                                 System.out.println(jo.toString());
                                 double rating = jo.isNull("AVG(VALUE)") ? 0.0 : jo.getDouble("AVG(VALUE)");
-                                RatingBar ratingBar = (RatingBar) myContentsView.findViewById(R.id.iw_rating);
-                                ratingBar.setRating((float) rating);
+                                rate = (float) rating;
+                                //RatingBar ratingBar = (RatingBar) myContentsView.findViewById(R.id.iw_rating);
+                                //ratingBar.setRating(rate);
                             }
 
 

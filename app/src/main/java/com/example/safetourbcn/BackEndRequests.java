@@ -1,5 +1,7 @@
 package com.example.safetourbcn;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
@@ -304,14 +306,14 @@ public class BackEndRequests {
 
 
 
-    public void guardaReserva(Integer id, String user, Integer count, String rd, String rh) {
+
+    public void guardaReserva(Integer id, String token, Integer count, String rd, String rh) {
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
         JSONObject newName = new JSONObject();
         String url = serverAddress + "/registerReservation";
 
         try {
             newName.put("id_establishment", id);
-            newName.put("username", user);
             newName.put("people_count", count);
             newName.put("reservation_date", rd);
             newName.put("reservation_hour", rh);
@@ -323,14 +325,17 @@ public class BackEndRequests {
         RequestBody body = RequestBody.create(newName.toString(), JSON);
         Request request = new Request.Builder()
                 .url(url)
+                .addHeader("AUTHORIZATION", token)
                 .post(body)
                 .build();
-
+        System.out.print("hey\n");
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 e.printStackTrace();
                 errorMsg = "connection";
+                System.out.print("No va");
+                Log.d("hey", "heyyy");
             }
 
             @Override
@@ -338,6 +343,10 @@ public class BackEndRequests {
                 if(response.isSuccessful()) {
                     String TAG = "aa";
                     Log.d(TAG,response.message());
+                    System.out.print("Deu");
+                }
+                else{
+                    System.out.print("Hola");
                 }
             }
         });

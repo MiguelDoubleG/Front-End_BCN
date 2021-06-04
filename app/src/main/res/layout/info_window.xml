@@ -26,13 +26,16 @@
 
     <RatingBar
         android:id="@+id/iw_rating"
-        style="?android:attr/ratingBarStyleSmall"
+        style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:max="5"
         android:numStars="5"
+        android:progressTint="#15E3FF"
+        android:rating="3.5"
         android:scaleX="1.5"
         android:scaleY="1.5"
+        android:secondaryProgressTint="#F85353"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.656"
