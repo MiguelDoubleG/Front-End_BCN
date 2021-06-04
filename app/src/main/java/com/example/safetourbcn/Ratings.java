@@ -24,6 +24,7 @@ public class Ratings extends AppCompatActivity {
     String[] authors;
     String[] descriptions;
     int[] values;
+    String[] boxes;
     ListView simpleList;
 
     @Override
@@ -46,8 +47,10 @@ public class Ratings extends AppCompatActivity {
             else if (values[i] == 4) values[i] = stars[3];
             else if (values[i] == 5) values[i] = stars[4];
         }
+        //translates boxes into individual checkboxes
+
         simpleList = (ListView) findViewById(R.id.simpleListView);
-        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), descriptions, values, authors);
+        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), descriptions, values, authors, boxes);
         simpleList.setAdapter(customAdapter);
         }
 
@@ -78,6 +81,7 @@ public class Ratings extends AppCompatActivity {
                         authors = new String[N];
                         descriptions = new String[N];
                         values = new int[N];
+                        boxes = new String[N];
 
                         for(int i = 0; i < N; ++i) {
                             JSONObject jo = ja.getJSONObject(i);
@@ -105,11 +109,13 @@ public class Ratings extends AppCompatActivity {
             String id = obj.getString("ID_AUTHOR");
             double value = obj.getDouble("VALUE");
             String description = obj.getString("DESCRIPTION");
+            String box = obj.getString("PREVENTIVE_MEASURES");
             JSONObject jo = ber.getUserInfo(id);
             String author = jo.getString("NAME");
             authors[i] = author;
             descriptions[i] = description;
             values[i] = (int)value;
+            boxes[i] = box;
         }catch(Exception e){}
 
     }
