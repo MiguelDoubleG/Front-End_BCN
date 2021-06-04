@@ -3,6 +3,7 @@ package com.example.safetourbcn;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -13,6 +14,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.Manifest;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,8 +29,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
@@ -82,6 +86,7 @@ public class MapsActivity
     private LocationManager locationManager;
     private AlertDialog dialog;
     private float rate= 4;
+    private NavigationView navigationView;
 
 
     /**
@@ -145,7 +150,7 @@ public class MapsActivity
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -177,6 +182,17 @@ public class MapsActivity
         MenuItem filterButton = findViewById(R.id.action_settings);
 
         getUserInfo();
+
+ /*       MenuItem v = navigationView.findViewById(R.id.loginActivity);
+        v.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                logout();
+                return false;
+            }
+        });*/
+
     }
 
 
@@ -367,7 +383,7 @@ public class MapsActivity
 
 
 
-    public void logout(View view) {
+    public void logout() {
         // Do something in response to button
         SharedPreferences sharedPreferences;
 
@@ -548,6 +564,11 @@ public class MapsActivity
         startActivity(intent);
     }
 
+    public void logout(MenuItem item) {
+        System.out.println("xd");
+        logout();
+    }
+
     class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         private final View myContentsView;
@@ -660,5 +681,6 @@ public class MapsActivity
     void getUserInfo() {
 
     }
+
 
 }
