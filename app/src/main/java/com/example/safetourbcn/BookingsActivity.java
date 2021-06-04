@@ -1,21 +1,29 @@
 package com.example.safetourbcn;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.common.util.JsonUtils;
+import com.google.android.material.snackbar.Snackbar;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,6 +32,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.example.safetourbcn.R.string.no_bookings;
 
 public class BookingsActivity extends AppCompatActivity {
     Session session = Session.getInstance();
@@ -84,7 +94,7 @@ public class BookingsActivity extends AppCompatActivity {
                     try {
                         JSONArray ja = new JSONArray(r);
                         if(ja.length() == 0) {
-
+                            showSnackNoReserves();
                         }
                         for(int i = 0; i < ja.length(); ++i) {
                             JSONObject jo = ja.getJSONObject(i);
@@ -155,5 +165,17 @@ public class BookingsActivity extends AppCompatActivity {
             nom = (TextView) itemView.findViewById(R.id.nomEstablishmentBooking);
             desc = (TextView) itemView.findViewById(R.id.infoEstablishmentBooking);
         }
+    }
+
+
+    void showSnackNoReserves(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                View parentLayout = findViewById(R.id.bookingsList);
+                Snackbar.make(parentLayout, R.string.no_bookings, Snackbar.LENGTH_LONG)
+                        .show();
+            }
+        });
     }
 }

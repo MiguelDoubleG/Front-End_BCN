@@ -84,4 +84,5 @@
         <item>Restaurante</item>
     </string-array>
     <string name="bookings">Reservas</string>
+    <string name="no_bookings">¡No tienes reservas!"</string>
 </resources>
