@@ -21,7 +21,15 @@
         android:theme="@style/Theme.SafeTourBCN"
         android:usesCleartextTraffic="true">
         <activity android:name=".Listview"></activity>
-        <activity android:name=".Ratings" />
+        <activity android:name=".Ratings"
+                  android:label="@string/ratings"
+                  android:parentActivityName=".MapsActivity">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MapsActivity" />
+        </activity>
         <activity
             android:name=".Valoraciones"
             android:label="@string/reserva_button"
@@ -60,7 +68,13 @@
         <activity
             android:name=".BookingsActivity"
             android:label="@string/bookings"
-            />
+            android:parentActivityName=".MapsActivity">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MapsActivity" />
+        </activity>
         <activity
             android:name=".SignUpActivity"
             android:parentActivityName=".ui.login.LoginActivity">
