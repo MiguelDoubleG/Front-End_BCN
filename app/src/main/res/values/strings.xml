@@ -86,4 +86,5 @@
     </string-array>
     <string name="bookings">Bookings</string>
     <string name="no_bookings">You haven\'t booked yet!</string>
+    <string name="user_already_exists">The user already exist</string>
 </resources>

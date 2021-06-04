@@ -351,6 +351,37 @@ public class BackEndRequests {
             }
         });
     }
+
+
+    public void addValoracion(String value, String description, int idEstablishment, String measures, String token) {
+        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+        JSONObject newUser = new JSONObject();
+        String url = serverAddress + "/registerRating";
+
+        try {
+            newUser.put("value", value);
+            newUser.put("description", description);
+            newUser.put("establishment_id", idEstablishment);
+            newUser.put("measures", measures);
+        } catch (JSONException e) {
+            Log.d("OKHTTP3", "JSON Excepton");
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(newUser.toString(), JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("AUTHORIZATION", token)
+                .post(body).
+                        build();
+
+        try {
+            Response response = client.newCall(request).execute();
+        } catch (IOException e) {
+            System.out.println("ERROR//////////////////////////////////////////7");
+            e.printStackTrace();
+        }
+    }
 }
 
 

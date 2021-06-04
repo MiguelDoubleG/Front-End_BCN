@@ -345,7 +345,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void run() {
                 View parentLayout = findViewById(R.id.sul);
-                Snackbar.make(parentLayout, "R.string.not_match", Snackbar.LENGTH_LONG)
+                Snackbar.make(parentLayout, R.string.user_already_exists, Snackbar.LENGTH_LONG)
                         .show();
             }
         });
