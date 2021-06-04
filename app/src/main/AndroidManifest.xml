@@ -20,10 +20,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SafeTourBCN"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Listview"></activity>
-        <activity android:name=".Ratings"
-                  android:label="@string/ratings"
-                  android:parentActivityName=".MapsActivity">
+        <activity android:name=".addRating"></activity>
+        <activity android:name=".Listview" />
+        <activity
+            android:name=".Ratings"
+            android:label="@string/ratings"
+            android:parentActivityName=".MapsActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
@@ -43,8 +45,7 @@
         <activity
             android:name=".DrawerActivity"
             android:label="@string/title_activity_drawer"
-            android:theme="@style/Theme.SafeTourBCN.NoActionBar"></activity>
-
+            android:theme="@style/Theme.SafeTourBCN.NoActionBar" />
         <activity
             android:name=".PerfilUsuarioActivity"
             android:label="@string/userProf"

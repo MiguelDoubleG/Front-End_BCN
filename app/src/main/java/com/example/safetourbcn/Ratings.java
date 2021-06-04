@@ -1,8 +1,13 @@
 package com.example.safetourbcn;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -31,6 +36,13 @@ public class Ratings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ratings);
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addRating(view);
+            }
+        });
         getRatings();
         try {
             Thread.sleep(2000);
@@ -118,5 +130,9 @@ public class Ratings extends AppCompatActivity {
             boxes[i] = box;
         }catch(Exception e){}
 
+    }
+    public void addRating(View view) {
+        Intent intent = new Intent(this, addRating.class);
+        startActivity(intent);
     }
 }
