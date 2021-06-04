@@ -84,6 +84,13 @@
         <item>Bar</item>
         <item>Restaurant</item>
     </string-array>
+    <string-array name="star_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
     <string name="bookings">Bookings</string>
     <string name="no_bookings">You haven\'t booked yet!</string>
 </resources>
